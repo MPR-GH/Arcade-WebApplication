@@ -8,18 +8,52 @@
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processing you may need here
+            getCurrentSelection();
         });
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
                 //TODO: add code for processing the current selection 
-
+                let navl = document.getElementsByTagName("a");
+                navl[0].onclick = function(){updateCurrentPage("login")};
+                navl[1].onclick = function(){updateCurrentPage("register")};
+                navl[2].onclick = function(){updateCurrentPage("profile")};
+                navl[3].onclick = function(){updateCurrentPage("logout")};
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
+        // function updateCurrentPage(page) {
+        //     let h1 = document.getElementsByTagName("h1")[0];
+        //     let title = document.getElementsByTagName("title")[0];
+        //     h1.innerText = page;
+        //     title.innerText = page[0].toUpperCase() + page.slice(1);
+        // }
     </script>
     <style>
         /* TODO: make edits here */
+        nav li  {
+            display: inline-block;
+            font-size: 20px;
+            padding: 20px;     
+        }
+        nav li:hover    {
+            background-color: rgb(248, 238, 100);
+        }
+        nav {
+            background-color: rgb(161, 224, 125);
+        }
+        ul li ul li  {
+            list-style-type:none;
+        }
+        ul li ul li:before  {
+            content: '✓';
+        }
+        h1, a  {
+            text-transform: capitalize;
+        }
+        h3  {
+            color: crimson;
+        }
     </style>
     <!-- make the necessary edits above this line -->
 
