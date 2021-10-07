@@ -29,22 +29,22 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     //TODO 3: validate/use
     $errors = [];
     if (empty($email)) {
-        array_push($errors, "Email must not be empty");
+        flash("Email must not be empty");
     }
     $email = sanitize_email($email);
     //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
     //if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     if(!is_valid_email($email)) {
-        array_push($errors, "Email is invalid");
+        flash("Email is invalid");
     }
     if (empty($password)) {
-        array_push($errors, "Password must be set");
+        flash("Password must be set");
     }
     if (strlen($password) < 8) {
-        array_push($errors, "Password must be 8 or more characters");
+        flash("Password must be 8 or more characters");
     }
     if (count($errors) > 0) {
-        echo "<pre>" . var_export($errors, true) . "</pre>";
+        flash("<pre>" . var_export($errors, true) . "</pre>");
     } else {
         //TODO 4
         $db = getDB();
@@ -57,18 +57,18 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                     $hash = $user["password"];
                     unset($user["password"]);
                     if (password_verify($password, $hash)) {
-                        echo "Welcome $email";
+                        flash("Welcome $email");
                         $_SESSION["user"] = $user;
                         die(header("Location: home.php"));
                     } else {
-                        echo "Invalid password";
+                        flash("Invalid password");
                     }
                 } else {
-                    echo "Invalid email";
+                    flash("Invalid email");
                 }
             }
         } catch (Exception $e) {
-            echo "<pre>" . var_export($e, true) . "</pre>";
+            flash("<pre>" . var_export($e, true) . "</pre>");
         }
     }
 }
