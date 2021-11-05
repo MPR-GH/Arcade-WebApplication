@@ -33,11 +33,15 @@
             // Is a bullet already on the canvas?
             var shooting = false;
             // The bulled shot from the ship
-            var bullet = makeSquare(0, 0, 10, 10);
+            var bullet1 = makeSquare(0, 0, 10, 10);
+            var bullet2 = makeSquare(0, 0, 10, 10);
+            var bullet3 = makeSquare(0, 0, 10, 10);
 
             // An array for enemies (in case there are more than one)
             var enemies = [];
             var PUs = [];
+
+            var PUTripleShot = false;
 
             // Add an enemy object to the array
             var enemyBaseSpeed = 2;
@@ -65,12 +69,12 @@
 
             // Return true if two squares a and b are colliding, false otherwise
             function isColliding(a, b) {
-                var result = false;
-                if (isWithin(a.x, b.x, b.x + b.l) || isWithin(a.x + a.l, b.x, b.x + b.l)) {
-                    if (isWithin(a.y, b.y, b.y + b.l) || isWithin(a.y + a.l, b.y, b.y + b.l)) {
-                        result = true;
-                    }
+            var result = false;
+            if (isWithin(a.x, b.x, b.x + b.l) || isWithin(a.x + a.l, b.x, b.x + b.l)) {
+                if (isWithin(a.y, b.y, b.y + b.l) || isWithin(a.y + a.l, b.y, b.y + b.l)) {
+                    result = true;
                 }
+            }
                 return result;
             }
 
@@ -78,6 +82,7 @@
             var score = 0;
             // The delay between enemies (in milliseconds)
             var timeBetweenEnemies = 5 * 1000;
+            var timeBetweenPUs = 5 * 5000;
             // ID to track the spawn timeout
             var timeoutId = null;
 
@@ -91,7 +96,7 @@
                 context.font = '24px Arial';
                 context.fillText('Click to Start', canvas.width / 2, canvas.height / 2);
                 context.font = '18px Arial';
-                context.fillText('Up/Down to move, Space to shoot.', canvas.width / 2, (canvas.height / 4) * 3);
+                context.fillText('Up/Down OR W/S OR D/A to move, Space OR click to shoot.', canvas.width / 2, (canvas.height / 4) * 3);
                 // Start the game on a click
                 canvas.addEventListener('click', startGame);
             }
@@ -159,8 +164,14 @@
             function shoot() {
                 if (!shooting) {
                     shooting = true;
-                    bullet.x = ship.x + ship.l;
-                    bullet.y = ship.y + ship.l / 2;
+                    if(PUTripleShot)	{
+                        bullet2.x = ship.x + ship.l;
+                        bullet2.y = ship.y + ship.l;
+                        bullet3.x = ship.x + ship.l;
+                        bullet3.y = ship.y;
+                    }
+                    bullet1.x = ship.x + ship.l;
+                    bullet1.y = ship.y + ship.l / 2;
                 }
             }
 
@@ -172,15 +183,37 @@
                 enemies.forEach(function(enemy) {
                     enemy.x -= enemy.s;
                     if (enemy.x < 0) {
-                    gameOver = true;
+                        gameOver = true;
                     }
                     context.fillStyle = '#00FF00';
                     enemy.draw();
                 });
+                PUs.forEach(function(PU) {
+                    PU.x -= PU.s;
+                    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+                    context.fillStyle = "#" + randomColor;
+                    PU.draw();
+                });
                 // Collide the ship with enemies
                 enemies.forEach(function(enemy, i) {
                     if (isColliding(enemy, ship)) {
-                    gameOver = true;
+                        if(PUTripleShot)	{
+                            PUTripleShot = false;
+                            enemies.splice(i, 1);
+                            ship.l = 50;
+                        }	else	{
+                            gameOver = true;
+                        }
+                    }
+                });
+                PUs.forEach(function(PU, i) {
+                    if (isColliding(PU, ship)) {
+                        if(PUTripleShot)	{
+                            score++;
+                        }
+                    PUs.splice(i, 1);
+                    PUTripleShot = true;
+                    ship.l = 75;
                     }
                 });
                 // Move the ship
@@ -203,10 +236,14 @@
                 // Move and draw the bullet
                 if (shooting) {
                     // Move the bullet
-                    bullet.x += bullet.s;
+                    bullet1.x += bullet1.s;
+                    if(PUTripleShot)	{
+                        bullet2.x += bullet2.s;
+                        bullet3.x += bullet3.s;
+                    }
                     // Collide the bullet with enemies
                     enemies.forEach(function(enemy, i) {
-                    if (isColliding(bullet, enemy)) {
+                    if (isColliding(bullet1, enemy)||(PUTripleShot && (isColliding(bullet2, enemy)||isColliding(bullet3, enemy)))) {
                         enemies.splice(i, 1);
                         score++;
                         shooting = false;
@@ -220,13 +257,23 @@
                         }
                     }
                     });
+                    PUs.forEach(function(PU,i)	{
+                        if (isColliding(bullet1, PU)||(PUTripleShot && (isColliding(bullet2, PU)||isColliding(bullet3, PU)))) {
+                            PUs.splice(i, 1);
+                            shooting = false;
+                    }
+                    });
                     // Collide with the wall
-                    if (bullet.x > canvas.width) {
+                    if (bullet1.x > canvas.width||(PUTripleShot && (bullet2.x > canvas.width||bullet3.x > canvas.width))) {
                         shooting = false;
                     }
                     // Draw the bullet
                     context.fillStyle = '#0000FF';
-                    bullet.draw();
+                    bullet1.draw();
+                    if(PUTripleShot)	{
+                        bullet2.draw();
+                        bullet3.draw();
+                    }
                 }
                 // Draw the score
                 context.fillStyle = '#000000';
@@ -240,6 +287,7 @@
                     window.requestAnimationFrame(draw);
                 }
             }
+
             // Start the game
             menu();
             canvas.focus();
