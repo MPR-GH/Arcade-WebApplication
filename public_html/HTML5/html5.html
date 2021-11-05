@@ -40,7 +40,7 @@
             // An array for enemies (in case there are more than one)
             var enemies = [];
             var PUs = [];
-
+            var lives = 3;
             var PUTripleShot = false;
 
             // Add an enemy object to the array
@@ -183,7 +183,16 @@
                 enemies.forEach(function(enemy) {
                     enemy.x -= enemy.s;
                     if (enemy.x < 0) {
-                        gameOver = true;
+                        if(PUTripleShot)    {
+                            PUTripleShot = false;
+                            enemies.splice(i, 1);
+                            ship.l = 50;
+                        }   else {
+                            lives--;
+                            if(lives == 0)  {
+                                gameOver = true;
+                            }
+                        }
                     }
                     context.fillStyle = '#00FF00';
                     enemy.draw();
@@ -197,11 +206,14 @@
                 // Collide the ship with enemies
                 enemies.forEach(function(enemy, i) {
                     if (isColliding(enemy, ship)) {
-                        if(PUTripleShot)	{
+                        if(PUTripleShot)    {
                             PUTripleShot = false;
                             enemies.splice(i, 1);
                             ship.l = 50;
-                        }	else	{
+                        }   else if(lives > 1)   {
+                            lives--;
+                            enemies.splice(i, 1);
+                        }   else    {
                             gameOver = true;
                         }
                     }
@@ -280,6 +292,10 @@
                 context.font = '24px Arial';
                 context.textAlign = 'left';
                 context.fillText('Score: ' + score, 1, 25)
+                context.fillStyle = '#000000';
+                context.font = '24px Arial';
+                context.textAlign = 'right';
+                context.fillText('Health: ' + lives, canvas.width - 15, 25)
                 // End or continue the game
                 if (gameOver) {
                     endGame();
