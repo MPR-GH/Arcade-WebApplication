@@ -83,4 +83,4 @@ function getMessages()  {
     }
     return array();
 }
-require(__DIR__."/../../partials/flash.php");
+require(__DIR__."/../partials/flash.php");
