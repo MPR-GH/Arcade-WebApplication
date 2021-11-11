@@ -16,7 +16,11 @@ require(__DIR__ . "/../../partials/nav.php");
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
-
+        let ele = (document.getElementsByName("email"))[0];
+        if (!preg_match('/^[a-z0-9_-]{3,16}$/i', $username)) {
+        flash("Username must only be alphanumeric and can only contain - or _", "danger");
+            $hasError = true;
+        }
         return true;
     }
 </script>
@@ -93,4 +97,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         }
     }
 }
+?>
+<?php
+require(__DIR__ . "/../../partials/flash.php");
 ?>
