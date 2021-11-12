@@ -13,11 +13,17 @@
 .alert-info {
     background-color: teal;
 }
-nav li{display: inline; background-color: rebeccapurple;}
-nav li a{color: hotpink}
-input{border-radius: 50%;}
+nav li{display: inline}
+nav li a{color: rgb(0, 0, 0);font-size: 30;}
+nav {
+    background-color: rgb(223, 127, 49);
+    border: 1px solid rgb(0, 0, 0);
+    max-width: 500px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 body{
-    background-color: hotpink;
-    color: rgb(153, 0, 153);
+    background-color: rgb(24, 22, 22);
+    color: rgb(255, 255, 255);
 
 }
