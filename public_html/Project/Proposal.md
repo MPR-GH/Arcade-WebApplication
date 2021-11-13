@@ -26,25 +26,25 @@
 <!-------------------------------------------------->
   - [x] \(11/12/2021) User will be able to register a new account
   -  List of Evidence of Feature Completion
-  -  - Status: Completed
-  -  - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
-  -  - Pull Requests
-  -  -  - PR link #1 https://github.com/MPR-GH/IT202-011/pull/6
-  -  - Screenshots
-  -  -  - Screenshot #1 ![Form fields](https://user-images.githubusercontent.com/78051985/141601401-e1a001ad-cfed-4153-a56f-6f3c7ddecf22.PNG)
-  -  -  -  - Screenshot #1 Form field Username,email,password, etc.
-  -  -  - Screenshot #2 ![Users table, email uniqe, and username uniqw](https://user-images.githubusercontent.com/78051985/141602774-fd8642eb-dea4-4fc7-acd0-f08833090ddd.PNG)
-  -  -  -  - Screenshot #2 Users table
-  -  -  - Screenshot #3 ![password hashed](https://user-images.githubusercontent.com/78051985/141602780-8968fa89-3bce-4bf7-9cad-6998212bea8f.PNG)
-  -  -  -  - Screenshot #3 Password hashed
-  -  -  - Screenshot #4 ![email unique](https://user-images.githubusercontent.com/78051985/141602776-2026eb7c-9542-4aec-8b19-183a586275f6.PNG)
-  -  -  -  - Screenshot #4 Email unique SQL
-  -  -  - Screenshot #5 ![username unique](https://user-images.githubusercontent.com/78051985/141602778-ea161ea2-c7f0-4cd5-8cc7-aaa80643c09f.PNG)
-  -  -  -  - Screenshot #5 Username unique SQL
-  -  -  - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603582-1c00521c-4cff-4eed-b844-07b3beb7919f.png)
-  -  -  -  - Screenshot #6 Taken email register before input
-  -  -  - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603691-11b7fa53-0a24-4d4a-9508-15faff3e8dbb.png)
-  -  -  -  - Screenshot #6 Taken email register after input
+     - Status: Completed
+     - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
+     - Pull Requests
+     -  - PR link #1 https://github.com/MPR-GH/IT202-011/pull/6
+     - Screenshots
+     -  - Screenshot #1 ![Form fields](https://user-images.githubusercontent.com/78051985/141601401-e1a001ad-cfed-4153-a56f-6f3c7ddecf22.PNG)
+     -  -  - Screenshot #1 Form field Username,email,password, etc.
+     -  - Screenshot #2 ![Users table, email uniqe, and username uniqw](https://user-images.githubusercontent.com/78051985/141602774-fd8642eb-dea4-4fc7-acd0-f08833090ddd.PNG)
+     -  -  - Screenshot #2 Users table
+     -  - Screenshot #3 ![password hashed](https://user-images.githubusercontent.com/78051985/141602780-8968fa89-3bce-4bf7-9cad-6998212bea8f.PNG)
+     -  -  - Screenshot #3 Password hashed
+     -  - Screenshot #4 ![email unique](https://user-images.githubusercontent.com/78051985/141602776-2026eb7c-9542-4aec-8b19-183a586275f6.PNG)
+     -  -  - Screenshot #4 Email unique SQL
+     -  - Screenshot #5 ![username unique](https://user-images.githubusercontent.com/78051985/141602778-ea161ea2-c7f0-4cd5-8cc7-aaa80643c09f.PNG)
+     -  -  - Screenshot #5 Username unique SQL
+     -  - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603582-1c00521c-4cff-4eed-b844-07b3beb7919f.png)
+     -  -  - Screenshot #6 Taken email register before input
+     -  - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603691-11b7fa53-0a24-4d4a-9508-15faff3e8dbb.png)
+     -  -  - Screenshot #6 Taken email register after input
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) User will be able to login to their account (given they enter the correct credentials)
   -  List of Evidence of Feature Completion
