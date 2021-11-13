@@ -24,12 +24,12 @@
 
 - Milestone 1
 <!-------------------------------------------------->
-  - [ ] \(11/12/2021) User will be able to register a new account
+  - [x] \(11/12/2021) User will be able to register a new account
   -  List of Evidence of Feature Completion
-    - Status: Pending
+    - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/6
     - Screenshots
       - Screenshot #1 ![Form fields](https://user-images.githubusercontent.com/78051985/141601401-e1a001ad-cfed-4153-a56f-6f3c7ddecf22.PNG)
         - Screenshot #1 Form field Username,email,password, etc.
@@ -41,15 +41,19 @@
         - Screenshot #4 Email unique SQL
       - Screenshot #5 ![username unique](https://user-images.githubusercontent.com/78051985/141602778-ea161ea2-c7f0-4cd5-8cc7-aaa80643c09f.PNG)
         - Screenshot #5 Username unique SQL
-      - Screenshot #6 
-        - Screenshot #6 
+      - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603582-1c00521c-4cff-4eed-b844-07b3beb7919f.png)
+        - Screenshot #6 Taken email register before input
+      - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603691-11b7fa53-0a24-4d4a-9508-15faff3e8dbb.png)
+        - Screenshot #6 Taken email register after input
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) User will be able to login to their account (given they enter the correct credentials)
   -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/35
+      - PR link #2 https://github.com/MPR-GH/IT202-011/pull/38
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/47
     - Screenshots
       - Screenshot #1 ![For elements](https://user-images.githubusercontent.com/78051985/141602344-b3f21695-a028-4cab-a1e6-6ef97d00a63c.PNG)
         - Screenshot #1 Form Elements
@@ -67,7 +71,7 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/logout.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/37
     - Screenshots
       - Screenshot #1 ![Redirect to login and message](https://user-images.githubusercontent.com/78051985/141602510-45edc947-d137-43c3-aac9-c9cbf1f8a7ff.PNG)
         - Screenshot #1 User redirected to login and message
@@ -79,7 +83,7 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/34
     - Screenshots
       - Screenshot #1 ![isloggedinfunctiondefinition](https://user-images.githubusercontent.com/78051985/141601721-7a1e9cfe-a594-479f-913d-b602a677209e.PNG)
         - Screenshot #1 Function to check if user is logged in
@@ -93,7 +97,7 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/34
     - Screenshots
       - Screenshot #1 ![image](https://user-images.githubusercontent.com/78051985/141599242-2d03c0b0-c80d-4037-bf2e-d101cc4a0747.png)
         - Screenshot #1 Added Roles and UserRoles tables
@@ -105,7 +109,10 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/33
+      - PR link #2 https://github.com/MPR-GH/IT202-011/pull/39
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/40
+      - PR link #4 https://github.com/MPR-GH/IT202-011/pull/50
     - Screenshots
       - Screenshot #1 ![Example of styling](https://user-images.githubusercontent.com/78051985/141602714-fe1e8729-2ff6-4fbd-887e-94d4f7f2c6ae.PNG)
         - Screenshot #1 Example of Syling
@@ -115,7 +122,10 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/7
+      - PR link #2 https://github.com/MPR-GH/IT202-011/pull/33
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/36
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/37
     - Screenshots
       - Screenshot #1 ![Flash messages function](https://user-images.githubusercontent.com/78051985/141602246-3a5d8d8b-8090-48df-95b3-c77e4bfc3fe1.PNG)
         - Screenshot #1 Function  to generate messages to user
@@ -131,7 +141,7 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/32
     - Screenshots
       - Screenshot #1 ![ProfileScrnshot](https://user-images.githubusercontent.com/78051985/141601648-34a6f83b-3aca-4d6f-be49-f214a46fbcec.PNG)
         - Screenshot #1 Users able to see their email and username if logged in
@@ -141,7 +151,7 @@
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/32
     - Screenshots
       - Screenshot #1 ![Check if username or email avail before allowing change](https://user-images.githubusercontent.com/78051985/141601838-87f2be52-768a-4878-ac54-359fd840d6d1.PNG)
         - Screenshot #1 Code to see if username or email is available
