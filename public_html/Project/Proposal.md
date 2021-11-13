@@ -26,10 +26,14 @@
 <!-------------------------------------------------->
   - [x] \(11/12/2021) User will be able to register a new account
   -  List of Evidence of Feature Completion
+    
     - Status: Completed
+    
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
+    
     - Pull Requests
       - PR link #1 https://github.com/MPR-GH/IT202-011/pull/6
+    
     - Screenshots
       - Screenshot #1 ![Form fields](https://user-images.githubusercontent.com/78051985/141601401-e1a001ad-cfed-4153-a56f-6f3c7ddecf22.PNG)
         - Screenshot #1 Form field Username,email,password, etc.
