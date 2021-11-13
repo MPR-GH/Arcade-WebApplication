@@ -25,7 +25,7 @@
 - Milestone 1
 <!-------------------------------------------------->
   - [x] \(11/12/2021) User will be able to register a new account
-  -  List of Evidence of Feature Completion
+     -  List of Evidence of Feature Completion
      - Status: Completed
      - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
      - Pull Requests
@@ -47,7 +47,7 @@
            - Screenshot #6 Taken email register after input
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) User will be able to login to their account (given they enter the correct credentials)
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
     - Pull Requests
@@ -67,7 +67,7 @@
         - Screenshot #5 Example of landing page
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) User will be able to logout
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/logout.php
     - Pull Requests
@@ -79,7 +79,7 @@
         - Screenshot #2 Session Expiring
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) Basic security rules implemented
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
@@ -93,7 +93,7 @@
         - Screenshot #3 Roles Table
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) Basic Roles implemented
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
@@ -105,7 +105,7 @@
         - Screenshot #2 Functiont to check if user has a specific role
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) Site should have basic styles/theme applied; everything should be styled
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
@@ -121,7 +121,7 @@
         - Screenshot #2 Final version of styling (it actually looks decent now)
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) Any output messages/errors should be “user friendly”
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
     - Pull Requests
@@ -140,7 +140,7 @@
         - Screenshot #4 Example 3 friendly output
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) User will be able to see their profile
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
     - Pull Requests
@@ -150,7 +150,7 @@
         - Screenshot #1 Users able to see their email and username if logged in
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) User will be able to edit their profile
-  -  List of Evidence of Feature Completion
+    -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
     - Pull Requests
