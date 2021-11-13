@@ -118,7 +118,7 @@
       - Screenshot #1 ![Example of styling](https://user-images.githubusercontent.com/78051985/141602714-fe1e8729-2ff6-4fbd-887e-94d4f7f2c6ae.PNG)
         - Screenshot #1 Example of Syling
       - Screenshot #2 ![image](https://user-images.githubusercontent.com/78051985/141604329-72af82cb-cc01-412b-a23a-2614f1031c7b.png)
-        - Screenshot #2 Final version of styling (it actually looks decent now)
+        - Screenshot #2 Final version of styling (it actually looks decent now). This was the last thing done.
 <!-------------------------------------------------->
   - [x] \(11/12/2021 of completion) Any output messages/errors should be “user friendly”
     -  List of Evidence of Feature Completion
