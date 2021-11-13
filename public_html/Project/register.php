@@ -29,8 +29,8 @@ $username = se($_POST, "username", "", false);
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
-        let pw = form.newPassword.value;
-        let con = form.confirmPassword.value;
+        let pw = form.password.value;
+        let con = form.confirm.value;
         let isValid = true;
         if (pw !== con) {
             flash("Password and Confirm password must match", "warning");
