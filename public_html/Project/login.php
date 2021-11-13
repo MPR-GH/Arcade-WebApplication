@@ -17,8 +17,8 @@ require(__DIR__ . "/../../partials/nav.php");
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
         let str = form.email.value;
-        const reMail = /^[a-z0-9]@[a-z0-9].[a-z0-9]$/i;
-        const reUser = /^[a-z0-9_-]{3,30}$/i;
+        const reMail = /^[a-zA-Z0-9]*@[a-zA-Z0-9]*.[a-zA-Z0-9]*$/i;
+        const reUser = /^[a-zA-Z0-9_-]{3,30}$/i;
         let matchEmail = reMail.test(str);
         let matchUsername = reUser.test(str);
         if(matchEmail || matchUsername)  {
