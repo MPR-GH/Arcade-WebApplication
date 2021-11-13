@@ -24,95 +24,153 @@
 
 - Milestone 1
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) User will be able to register a new account
+  - [x] \(11/12/2021) User will be able to register a new account
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/6
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![Form fields](https://user-images.githubusercontent.com/78051985/141601401-e1a001ad-cfed-4153-a56f-6f3c7ddecf22.PNG)
+        - Screenshot #1 Form field Username,email,password, etc.
+      - Screenshot #2 ![Users table, email uniqe, and username uniqw](https://user-images.githubusercontent.com/78051985/141602774-fd8642eb-dea4-4fc7-acd0-f08833090ddd.PNG)
+        - Screenshot #2 Users table
+      - Screenshot #3 ![password hashed](https://user-images.githubusercontent.com/78051985/141602780-8968fa89-3bce-4bf7-9cad-6998212bea8f.PNG)
+        - Screenshot #3 Password hashed
+      - Screenshot #4 ![email unique](https://user-images.githubusercontent.com/78051985/141602776-2026eb7c-9542-4aec-8b19-183a586275f6.PNG)
+        - Screenshot #4 Email unique SQL
+      - Screenshot #5 ![username unique](https://user-images.githubusercontent.com/78051985/141602778-ea161ea2-c7f0-4cd5-8cc7-aaa80643c09f.PNG)
+        - Screenshot #5 Username unique SQL
+      - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603582-1c00521c-4cff-4eed-b844-07b3beb7919f.png)
+        - Screenshot #6 Taken email register before input
+      - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603691-11b7fa53-0a24-4d4a-9508-15faff3e8dbb.png)
+        - Screenshot #6 Taken email register after input
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) User will be able to login to their account (given they enter the correct credentials)
+  - [x] \(11/12/2021 of completion) User will be able to login to their account (given they enter the correct credentials)
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/35
+      - PR link #2 https://github.com/MPR-GH/IT202-011/pull/38
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/47
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![For elements](https://user-images.githubusercontent.com/78051985/141602344-b3f21695-a028-4cab-a1e6-6ef97d00a63c.PNG)
+        - Screenshot #1 Form Elements
+      - Screenshot #2 ![Example email DNE](https://user-images.githubusercontent.com/78051985/141602357-00c8d09d-52ae-4ae3-95df-92f1371675da.PNG)
+        - Screenshot #2 Example account not existing
+      - Screenshot #3 ![Example password incorrect](https://user-images.githubusercontent.com/78051985/141602360-3cf4d191-f3ba-495f-9210-7f467652bf55.PNG)
+        - Screenshot #3 Example password incorrect
+      - Screenshot #4 ![Example session expire](https://user-images.githubusercontent.com/78051985/141602376-e925c595-9a40-44b4-bbdb-f822f9ef5357.PNG)
+        - Screenshot #4 Example of user session logging out
+      - Screenshot #5 ![Example landing page, fetch](https://user-images.githubusercontent.com/78051985/141602371-9cb47d16-94b6-4b6c-b986-85ba50df82d6.PNG)
+        - Screenshot #5 Example of landing page
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) User will be able to logout
+  - [x] \(11/12/2021 of completion) User will be able to logout
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/logout.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/37
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![Redirect to login and message](https://user-images.githubusercontent.com/78051985/141602510-45edc947-d137-43c3-aac9-c9cbf1f8a7ff.PNG)
+        - Screenshot #1 User redirected to login and message
+      - Screenshot #2 ![Example session expire](https://user-images.githubusercontent.com/78051985/141602508-4979a847-b7d4-4e8f-a193-1141336765ca.PNG)
+        - Screenshot #2 Session Expiring
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) Basic security rules implemented
+  - [x] \(11/12/2021 of completion) Basic security rules implemented
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/34
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![isloggedinfunctiondefinition](https://user-images.githubusercontent.com/78051985/141601721-7a1e9cfe-a594-479f-913d-b602a677209e.PNG)
+        - Screenshot #1 Function to check if user is logged in
+      - Screenshot #2 ![Example use in home](https://user-images.githubusercontent.com/78051985/141601788-86c28919-c340-4161-92e7-52ea64437af3.PNG)
+        - Screenshot #2 For example used in Home page
+      - Screenshot #3 ![Roles Table](https://user-images.githubusercontent.com/78051985/141601806-9313c3a3-a99d-4f02-96ef-c81fd83ab675.PNG)
+        - Screenshot #3 Roles Table
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) Basic Roles implemented
+  - [x] \(11/12/2021 of completion) Basic Roles implemented
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/34
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![image](https://user-images.githubusercontent.com/78051985/141599242-2d03c0b0-c80d-4037-bf2e-d101cc4a0747.png)
+        - Screenshot #1 Added Roles and UserRoles tables
+      - Screenshot #2 ![Check if user has a specific role](https://user-images.githubusercontent.com/78051985/141599389-7cfd31a0-f179-4291-9a80-4e5f45f67b38.PNG)
+        - Screenshot #2 Functiont to check if user has a specific role
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) Site should have basic styles/theme applied; everything should be styled
+  - [x] \(11/12/2021 of completion) Site should have basic styles/theme applied; everything should be styled
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/33
+      - PR link #2 https://github.com/MPR-GH/IT202-011/pull/39
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/40
+      - PR link #4 https://github.com/MPR-GH/IT202-011/pull/50
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![Example of styling](https://user-images.githubusercontent.com/78051985/141602714-fe1e8729-2ff6-4fbd-887e-94d4f7f2c6ae.PNG)
+        - Screenshot #1 Example of Syling
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) Any output messages/errors should be “user friendly”
+  - [x] \(11/12/2021 of completion) Any output messages/errors should be “user friendly”
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/7
+      - PR link #2 https://github.com/MPR-GH/IT202-011/pull/33
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/36
+      - PR link #3 https://github.com/MPR-GH/IT202-011/pull/37
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![Flash messages function](https://user-images.githubusercontent.com/78051985/141602246-3a5d8d8b-8090-48df-95b3-c77e4bfc3fe1.PNG)
+        - Screenshot #1 Function  to generate messages to user
+      - Screenshot #2 ![example1 friendly output](https://user-images.githubusercontent.com/78051985/141602248-c0e71061-5481-44fb-bab3-265eae2567e5.PNG)
+        - Screenshot #2 Example 1 friendly output
+      - Screenshot #3 ![Example2 firendly output](https://user-images.githubusercontent.com/78051985/141602251-b3e8ebac-5070-41ce-9753-661261988e1e.PNG)
+        - Screenshot #3 Example 2 friendly output
+      - Screenshot #4 ![Example3 friendly message](https://user-images.githubusercontent.com/78051985/141602254-f122e66d-cfc4-43f9-91e9-08a6068fca08.PNG)
+        - Screenshot #4 Example 3 friendly output
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) User will be able to see their profile
+  - [x] \(11/12/2021 of completion) User will be able to see their profile
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/32
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![ProfileScrnshot](https://user-images.githubusercontent.com/78051985/141601648-34a6f83b-3aca-4d6f-be49-f214a46fbcec.PNG)
+        - Screenshot #1 Users able to see their email and username if logged in
 <!-------------------------------------------------->
-  - [ ] \(mm/dd/yyyy of completion) User will be able to edit their profile
+  - [x] \(11/12/2021 of completion) User will be able to edit their profile
   -  List of Evidence of Feature Completion
-    - Status: Pending (Completed, Partially working, Incomplete, Pending)
-    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Status: Completed
+    - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
     - Pull Requests
-      - PR link #1 (repeat as necessary)
+      - PR link #1 https://github.com/MPR-GH/IT202-011/pull/32
     - Screenshots
-      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
-        - Screenshot #1 description explaining what you're trying to show
+      - Screenshot #1 ![Check if username or email avail before allowing change](https://user-images.githubusercontent.com/78051985/141601838-87f2be52-768a-4878-ac54-359fd840d6d1.PNG)
+        - Screenshot #1 Code to see if username or email is available
+      - Screenshot #2 ![Example unavailable Email(pre)](https://user-images.githubusercontent.com/78051985/141601917-19df163a-0b65-4bf1-bff7-ce9646b53e5a.PNG)
+        - Screenshot #2 Input of unavailable email
+      - Screenshot #3 ![Example unavailable Email(post)](https://user-images.githubusercontent.com/78051985/141601919-1c26c4e7-1e40-4e93-a3d9-1ef4cf31bc8f.PNG)
+        - Screenshot #3 Output of unavailable email
+      - Screenshot #4 ![Example unavailable Username(pre)](https://user-images.githubusercontent.com/78051985/141601922-c7b33f49-42e4-49ae-b244-dfb64f62ca60.PNG)
+        - Screenshot #4 Input of unavailable username
+      - Screenshot #5 ![Example unavailable Username(post)](https://user-images.githubusercontent.com/78051985/141601925-af29a001-12e7-470f-9a13-c88cb33b3eba.PNG)
+        - Screenshot #5 Output of unavailable username
+      - Screenshot #6 ![Username Email Validation](https://user-images.githubusercontent.com/78051985/141602037-bfaefc31-6bc8-4f48-9d8c-d09008c7884c.PNG)
+        - Screenshot #6 Code for the Username/Email Validation
+      - Screenshot #7 ![Example email validation](https://user-images.githubusercontent.com/78051985/141602033-d33a9ec2-78a3-41fb-8fa2-20fdb154a0fe.PNG)
+        - Screenshot #7 Example of email validation
+      - Screenshot #8 ![Checks if correct password is provided before change](https://user-images.githubusercontent.com/78051985/141602050-fd0adc0d-bd32-407a-a3aa-bf5d30b82fe3.PNG)
+        - Screenshot #8 Checks if password is correct before changing
+      - Screenshot #9 ![Example incorrect password provided](https://user-images.githubusercontent.com/78051985/141602053-6f399fe0-f6b5-4e69-94f8-7279e844e553.PNG)
+        - Screenshot #9 Example of incorrect password being provided
 - Milestone 2
 - Milestone 3
 - Milestone 4
