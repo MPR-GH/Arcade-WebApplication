@@ -1,8 +1,8 @@
 # Project Name: Simple Arcade
 ## Project Summary: This project will create a simple Arcade with scoreboards and competitions based on the implemented game.
-## Github Link: (Prod Branch of Project Folder)
-## Project Board Link: 
-## Website Link: (Heroku Prod of Project folder)
+## Github Link: https://github.com/MPR-GH/IT202-011/tree/prod/public_html/Project
+## Project Board Link: https://github.com/MPR-GH/IT202-011/projects/1
+## Website Link: https://mpr3-dev.herokuapp.com/Project/
 ## Your Name: Mihir Rana
 
 <!--
