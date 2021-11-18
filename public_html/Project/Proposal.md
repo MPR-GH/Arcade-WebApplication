@@ -24,7 +24,7 @@
 
 - Milestone 1
 <!-------------------------------------------------->
-  - [x] \(11/12/2021) User will be able to register a new account
+  - [x] \(10/07/2021) User will be able to register a new account
      -  List of Evidence of Feature Completion
      - Status: Completed
      - Direct Link: https://mpr3-dev.herokuapp.com/Project/register.php
@@ -46,7 +46,7 @@
         - Screenshot #6 ![image](https://user-images.githubusercontent.com/78051985/141603691-11b7fa53-0a24-4d4a-9508-15faff3e8dbb.png)
            - Screenshot #6 Taken email register after input
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) User will be able to login to their account (given they enter the correct credentials)
+  - [x] \(11/11/2021 of completion) User will be able to login to their account (given they enter the correct credentials)
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
@@ -66,7 +66,7 @@
       - Screenshot #5 ![Example landing page, fetch](https://user-images.githubusercontent.com/78051985/141602371-9cb47d16-94b6-4b6c-b986-85ba50df82d6.PNG)
         - Screenshot #5 Example of landing page
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) User will be able to logout
+  - [x] \(11/11/2021 of completion) User will be able to logout
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/logout.php
@@ -78,7 +78,7 @@
       - Screenshot #2 ![Example session expire](https://user-images.githubusercontent.com/78051985/141602508-4979a847-b7d4-4e8f-a193-1141336765ca.PNG)
         - Screenshot #2 Session Expiring
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) Basic security rules implemented
+  - [x] \(11/10/2021 of completion) Basic security rules implemented
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
@@ -92,7 +92,7 @@
       - Screenshot #3 ![Roles Table](https://user-images.githubusercontent.com/78051985/141601806-9313c3a3-a99d-4f02-96ef-c81fd83ab675.PNG)
         - Screenshot #3 Roles Table
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) Basic Roles implemented
+  - [x] \(11/10/2021 of completion) Basic Roles implemented
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/home.php
@@ -120,7 +120,7 @@
       - Screenshot #2 ![image](https://user-images.githubusercontent.com/78051985/141604329-72af82cb-cc01-412b-a23a-2614f1031c7b.png)
         - Screenshot #2 Final version of styling (it actually looks decent now). This was the last thing done.
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) Any output messages/errors should be “user friendly”
+  - [x] \(11/10/2021 of completion) Any output messages/errors should be “user friendly”
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/login.php
@@ -139,7 +139,7 @@
       - Screenshot #4 ![Example3 friendly message](https://user-images.githubusercontent.com/78051985/141602254-f122e66d-cfc4-43f9-91e9-08a6068fca08.PNG)
         - Screenshot #4 Example 3 friendly output
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) User will be able to see their profile
+  - [x] \(11/10/2021 of completion) User will be able to see their profile
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
@@ -149,7 +149,7 @@
       - Screenshot #1 ![ProfileScrnshot](https://user-images.githubusercontent.com/78051985/141601648-34a6f83b-3aca-4d6f-be49-f214a46fbcec.PNG)
         - Screenshot #1 Users able to see their email and username if logged in
 <!-------------------------------------------------->
-  - [x] \(11/12/2021 of completion) User will be able to edit their profile
+  - [x] \(11/10/2021 of completion) User will be able to edit their profile
     -  List of Evidence of Feature Completion
     - Status: Completed
     - Direct Link: https://mpr3-dev.herokuapp.com/Project/profile.php
