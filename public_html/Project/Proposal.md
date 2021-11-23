@@ -177,7 +177,7 @@
 - Milestone 2
 <!-------------------------------------------------->
   - [ ] (mm/dd/yyyy of completion) Pick a simple game to implement, anything that generates a score that’s more advanced than a simple random number generator (may build off of a sample from the site shared in class)
-    -  List of Evidence of Feature Completion
+    - List of Evidence of Feature Completion
     - Status: Pending (Completed, Partially working, Incomplete, Pending)
     - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
     - Pull Requests
@@ -187,7 +187,7 @@
 	    - Screenshot #1 description explaining what you're trying to show
 <!-------------------------------------------------->
   - [ ] (mm/dd/yyyy of completion) The system will save the user’s score at the end of the game if the user is logged in
-    -  List of Evidence of Feature Completion
+    - List of Evidence of Feature Completion
     - Status: Pending (Completed, Partially working, Incomplete, Pending)
 	  - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
 	  - Pull Requests
@@ -197,7 +197,7 @@
 	      - Screenshot #1 description explaining what you're trying to show
 <!-------------------------------------------------->
   - [ ] (mm/dd/yyyy of completion) The user will be able to see their last 10 scores
-    -  List of Evidence of Feature Completion
+    - List of Evidence of Feature Completion
 	  - Status: Pending (Completed, Partially working, Incomplete, Pending)
 	  - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
 	  - Pull Requests
@@ -207,7 +207,7 @@
 	      - Screenshot #1 description explaining what you're trying to show
 <!-------------------------------------------------->
   - [ ] (mm/dd/yyyy of completion) Create functions that output the following scoreboards (this will be used later)
-    -  List of Evidence of Feature Completion
+    - List of Evidence of Feature Completion
     - Status: Pending (Completed, Partially working, Incomplete, Pending)
     - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
     - Pull Requests
