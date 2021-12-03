@@ -208,7 +208,6 @@ require(__DIR__ . "/../../partials/nav.php");
                     if (enemy.x < 0) {
                         if(PUTripleShot)    {
                             PUTripleShot = false;
-                            enemies.splice(i, 1);
                             ship.l = 50;
                         }   else {
                             lives--;
