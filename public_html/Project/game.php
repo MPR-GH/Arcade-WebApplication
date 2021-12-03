@@ -130,6 +130,26 @@ require(__DIR__ . "/../../partials/nav.php");
                 context.font = '24px Arial';
                 context.textAlign = 'center';
                 context.fillText('Game Over. Final Score: ' + score, canvas.width / 2, canvas.height / 2);
+                let http = new XMLHttpRequest();
+                http.onreadystatechange = () => {
+                    if (http.readyState == 4) {
+                        if (http.status === 200) {
+                            let data = JSON.parse(http.responseText);
+                            console.log("received data", data);
+                            flash(data.message, "success");
+                            refreshBalance();
+                        }
+                        console.log(http);
+                    }
+                }
+                http.open("POST", "api/save_score.php", true);
+                let data = {
+                    score: score
+                }
+                let q = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+                console.log(q)
+                http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                http.send(q);
             }
 
             // Listen for keydown events
@@ -188,7 +208,6 @@ require(__DIR__ . "/../../partials/nav.php");
                     if (enemy.x < 0) {
                         if(PUTripleShot)    {
                             PUTripleShot = false;
-                            enemies.splice(i, 1);
                             ship.l = 50;
                         }   else {
                             lives--;
