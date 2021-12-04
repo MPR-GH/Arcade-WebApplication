@@ -4,6 +4,7 @@ is_logged_in(true);
 ?>
 <?php
 if (isset($_POST["save"])) {
+    $db = getDB();
     $email = se($_POST, "email", null, false);
     $username = se($_POST, "username", null, false);
     $hasError = false;
@@ -20,7 +21,7 @@ if (isset($_POST["save"])) {
     }
     if (!$hasError) {
         $params = [":email" => $email, ":username" => $username, ":id" => get_user_id()];
-        $db = getDB();
+        
         $stmt = $db->prepare("UPDATE Users set email = :email, username = :username where id = :id");
         try {
             $stmt->execute($params);
@@ -84,7 +85,30 @@ if (isset($_POST["save"])) {
 <?php
 $email = get_user_email();
 $username = get_username();
+$user_id = get_user_id();
 ?>
+<h1>Profile</h1>
+<div>
+    Best Score: <?php echo get_best_score($user_id); ?>
+</div>
+<div>
+    <?php $scores = get_latest_scores($user_id); ?>
+    <h3>Score History</h3>
+    <table class="table text-light">
+        <thead>
+            <th>Score</th>
+            <th>Time</th>
+        </thead>
+        <tbody>
+            <?php foreach ($scores as $score) : ?>
+                <tr>
+                    <td><?php se($score, "score", 0); ?></td>
+                    <td><?php se($score, "created", "-"); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 <form method="POST" onsubmit="return validate(this);">
     <div class="mb-3">
         <label for="email">Email</label>
