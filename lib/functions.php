@@ -180,6 +180,9 @@ function get_top_10($duration = "day")
     } catch (PDOException $e) {
         error_log("Error fetching scores for $d: " . var_export($e->errorInfo, true));
     }
+    if(empty($results)) {
+        flash("No $d scores to display");
+    }
     return $results;
 }
 
