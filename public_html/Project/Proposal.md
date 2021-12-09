@@ -198,6 +198,97 @@
  [https://github.com/MPR-GH/IT202-011/pull/86](https://github.com/MPR-GH/IT202-011/pull/86)</p></td></tr><tr><td><table><tr><td>F4 - Top 10 Weekly<tr><td>Status: completed</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693812-90cb8761-f81c-4c6e-a7d0-de1277b00f1f.PNG"><p>Code that displays the table</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693839-6632f023-ebb2-47f3-8a61-9e1632d0d45f.PNG"><p>Proof showing function outputting weekly table correctly</td></tr></td></tr></table></td></tr><tr><td><table><tr><td>F4 - Top 10 Monthly<tr><td>Status: completed</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693864-4b2003e1-5474-4326-bebf-314f4b168b14.PNG"><p>Code that displays the table</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693871-13e3b241-6322-41bc-9b68-1e8b49e4596a.PNG"><p>Proof showing function outputting monthly table correctly</td></tr></td></tr></table></td></tr><tr><td><table><tr><td>F4 - Top 10 Lifetime<tr><td>Status: completed</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693864-4b2003e1-5474-4326-bebf-314f4b168b14.PNG"><p>Code that displays the table</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693903-f26e3b26-9e29-4113-9d46-f73028a43f68.PNG"><p>Proof showing function outputting lifetime table correctly</td></tr></td></tr></table></td></tr><tr><td><table><tr><td>F4 - Scoreboards should show no more than 10 results; if there are no results a proper message should be displayed (i.e., “No [time period] scores to display”)<tr><td>Status: completed</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693935-00dbc873-143c-4f9a-9339-e06fc0b93996.PNG"><p>Shows all tables have only ten results</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693958-5dbb560e-93ed-4e78-ab94-ffaa4dd900f9.PNG"><p>While the DB has more than 10 results in it</td></tr><tr><td><img width="100%" src="https://user-images.githubusercontent.com/78051985/144693974-2e848136-0a7e-4c79-96d2-27f94b8c1c3f.PNG"><p>Showing no daily scores output message (same for other time periods)</td></tr></td></tr></table></td></tr></td></tr></table>
 
 - Milestone 3
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Users will have points associated with their account
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Create a PointsHistory table
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Competitions table should have the following columns (id, name, created, duration, expires (now + duration), current_reward, starting_reward, join_fee, current_participants, min_participants, paid_out (boolean), min_score, first_place_per, second_place_per, third_place_per, cost_to_create, created, modified)
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) User will be able to create a competition
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Each new participant causes the Reward value to increase by at least 1 or 50% of the joining fee rounded up
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Have a page where the User can see active competitions (not expired)
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Will need an association table CompetitionParticipants (id, comp_id, user_id, created)
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) User can join active competitions 
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
+- [ ] \(mm/dd/yyyy of completion) Create function that calculates competition winners
+  -  List of Evidence of Feature Completion
+    - Status: Pending (Completed, Partially working, Incomplete, Pending)
+    - Direct Link: (Direct link to the file or files in heroku prod for quick testing (even if it's a protected page))
+    - Pull Requests
+      - PR link #1 (repeat as necessary)
+    - Screenshots
+      - Screenshot #1 (paste the image so it uploads to github) (repeat as necessary)
+        - Screenshot #1 description explaining what you're trying to show
+<!-------------------------------------------------->
 - Milestone 4
 ### Intructions
 #### Don't delete this
