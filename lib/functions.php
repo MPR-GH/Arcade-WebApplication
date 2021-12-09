@@ -203,6 +203,23 @@ function get_best_score($user_id)
     return 0;
 }
 
+function get_total_points($user_id)
+{
+    $query = "SELECT points from Users WHERE user_id = :id";
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":id" => $user_id]);
+        $r = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($r) {
+            return (int)se($r, "points", 0, false);
+        }
+    } catch (PDOException $e) {
+        error_log("Error fetching points for user $user_id: " . var_export($e->errorInfo, true));
+    }
+    return 0;
+}
+
 function get_latest_scores($user_id, $limit = 10)
 {
     if ($limit < 1 || $limit > 50) {
