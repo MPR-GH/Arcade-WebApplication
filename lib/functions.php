@@ -205,7 +205,7 @@ function get_best_score($user_id)
 
 function get_total_points($user_id)
 {
-    $query = "SELECT points from Users WHERE user_id = :id";
+    $query = "SELECT points FROM Users WHERE id = :id";
     $db = getDB();
     $stmt = $db->prepare($query);
     try {
@@ -216,6 +216,32 @@ function get_total_points($user_id)
         }
     } catch (PDOException $e) {
         error_log("Error fetching points for user $user_id: " . var_export($e->errorInfo, true));
+    }
+    return 0;
+}
+
+function insert_points($user_id,$amount,$reason) {
+    $query = "INSERT INTO PointsHistory (user_id, point_change, reason) VALUES (:uid,:amt,:rea)";
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":uid" => $user_id, ":amt" => $amount, ":rea" => $reason]);
+        update_points($user_id);
+        flash("Added $amount points to your account","success");
+    }   catch (PDOException $e) {
+        error_log("Error inserting into points table for user $user_id: " . var_export($e->errorInfo, true));
+    }
+    return 0;
+}
+
+function update_points($user_id)    {
+    $query = "UPDATE Users set points = (SELECT IFNULL(SUM(point_change), 0) FROM PointsHistory WHERE user_id = :uid) WHERE id = :uid";
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":uid" => $user_id]);
+    }   catch(PDOException $e)  {
+        error_log("Error updating points for user $user_id: " . var_export($e->errorInfo, true));
     }
     return 0;
 }

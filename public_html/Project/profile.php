@@ -90,7 +90,6 @@ $user_id = get_user_id();
 <h1>Profile</h1>
 <div>
     Total Points: <?php echo get_total_points($user_id)?>
-    
     Best Score: <?php echo get_best_score($user_id); ?>
 </div>
 <div>
