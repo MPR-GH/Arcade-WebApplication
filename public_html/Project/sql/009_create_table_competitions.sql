@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS Competitions(
     check (current_reward >= starting_reward),
     check (min_participants >= 3),
     check (current_participants >= 0),
-    check(join_fee >= 0)
+    check(join_fee >= 0),
+    check (first_place_per + second_place_per + third_place_per = 100)
 )
