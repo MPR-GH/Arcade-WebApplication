@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `PointsHistory` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `user_id` NOT NULL INT,
-    `point_change` NOT NULL INT,
+    `user_id` INT NOT NULL,
+    `point_change` INT NOT NULL,
     `reason` VARCHAR(60),
     `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id)
