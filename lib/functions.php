@@ -407,3 +407,182 @@ function persistQueryString($page)
     $_GET["page"] = $page;
     return http_build_query($_GET);
 }
+
+function get_top_scores_for_comp($comp_id, $limit = 10)
+{
+    $db = getDB();
+    //below if a user can win more than one place
+    /*$stmt = $db->prepare(
+        "SELECT score, s.created, username, u.id as user_id FROM BGD_Scores s 
+    JOIN BGD_UserComps uc on uc.user_id = s.user_id 
+    JOIN BGD_Competitions c on c.id = uc.competition_id
+    JOIN Users u on u.id = s.user_id WHERE c.id = :cid AND s.score >= c.min_score AND s.created 
+    BETWEEN uc.created AND c.expires ORDER BY s.score desc LIMIT :limit"
+    );*/
+    //Below if a user can't win more than one place
+    $stmt = $db->prepare("SELECT * FROM (DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
+    JOIN CompetitionParticipants uc on uc.user_id = s.user_id
+    JOIN Competitions c on uc.comp_id = c.id
+    WHERE c.id = :cid AND s.created BETWEEN uc.created AND c.expires
+    )as t where `rank` = 1 ORDER BY score desc LIMIT :limit");
+    $scores = [];
+    try {
+        $stmt->bindValue(":cid", $comp_id, PDO::PARAM_INT);
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $scores = $r;
+        }
+    } catch (PDOException $e) {
+        flash("There was a problem fetching scores, please try again later", "danger");
+        error_log("List competition scores error: " . var_export($e, true));
+    }
+    return $scores;
+}
+
+/***
+ * Helper for tracking to echo and error_log()
+ */
+function elog($data)
+{
+    echo "<br>" . var_export($data, true) . "<br>";
+    error_log(var_export($data, true));
+}
+
+
+function calc_winners()
+{
+    $db = getDB();
+    elog("Starting winner calc");
+    $calced_comps = [];
+    $limit = 10;
+    $stmt = $db->prepare("select c.id,c.name, first_place_per, second_place_per, third_place_per, current_reward 
+    from Competitions c where expires <= CURRENT_TIMESTAMP() AND current_participants >= min_participants AND paid_out = 0 LIMIT :limit");
+    $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+    try {
+        $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $rc = $stmt->rowCount();
+            elog("Validating $rc comps");
+            foreach ($r as $row) {
+                $fp = floatval(se($row, "first_place_per", 0, false) / 100);
+                $sp = floatval(se($row, "second_place_per", 0, false) / 100);
+                $tp = floatval(se($row, "third_place_per", 0, false) / 100);
+                $reward = (int)se($row, "current_reward", 0, false);
+                $title = se($row, "name", "-", false);
+                $fpr = ceil($reward * $fp);
+                $spr = ceil($reward * $sp);
+                $tpr = ceil($reward * $tp);
+                $comp_id = se($row, "id", -1, false);
+                
+                try {
+                    $r = get_top_scores_for_comp($comp_id, 3);
+                    if ($r) {
+                        $atleastOne = false;
+                        foreach ($r as $index => $row) {
+                            $score = se($row, "score", 0, false);
+                            $user_id = se($row, "user_id", -1, false);
+                            if ($index == 0) {
+                                if(insert_points($user_id,$fpr,"First place in $title with score of $score"))    {
+                                    $atleastOne = true;
+                                }
+                                elog("User $user_id First place in $title with score of $score");
+                            } else if ($index == 1) {
+                                if(insert_points($user_id,$spr,"Second place in $title with score of $score"))    {
+                                    $atleastOne = true;
+                                }
+                                elog("User $user_id Second place in $title with score of $score");
+                            } else if ($index == 1) {
+                                if(insert_points($user_id,$tpr,"Third place in $title with score of $score"))    {
+                                    $atleastOne = true;
+                                }
+                                elog("User $user_id Third place in $title with score of $score");
+                            }
+                        }
+                        if ($atleastOne) {
+                            array_push($calced_comps, $comp_id);
+                        }
+                    } else {
+                        elog("No eligible scores");
+                    }
+                } catch (PDOException $e) {
+                    error_log("Getting winners error: " . var_export($e, true));
+                }
+            }
+        } else {
+            elog("No competitions ready");
+        }
+    } catch (PDOException $e) {
+        error_log("Getting Expired Comps error: " . var_export($e, true));
+    }
+    //closing calced comps
+    if (count($calced_comps) > 0) {
+        $query = "UPDATE Competitions set paid_out = 1 WHERE id in ";
+        $query = "(" . str_repeat("?,", count($calced_comps) - 1) . "?)";
+        elog("Close query: $query");
+        $stmt = $db->prepare($query);
+        try {
+            $stmt->execute($calced_comps);
+            $updated = $stmt->rowCount();
+            elog("Marked $updated comps complete and calced");
+        } catch (PDOException $e) {
+            error_log("Closing valid comps error: " . var_export($e, true));
+        }
+    } else {
+        elog("No competitions to calc");
+    }
+
+    //issue refund
+    $stmt = $db->prepare(
+       "SELECT cp.user_id,c.id FROM CompetitionParticipants cp LEFT JOIN Competitions c ON cp.comp_id = c.id 
+        WHERE expires <= CURRENT_TIMESTAMP() AND current_participants < min_participants AND paid_out = 0 
+        ORDER BY cp.created DESC 
+        LIMIT 1"
+    );
+    
+    try {
+        $r = $stmt->execute();
+        $user_id = se($r, "user_id",0,false);
+        $comp_id = se($r, "comp_id",0,false);
+        issue_refund($user_id,$comp_id);
+    } catch (PDOException $e)   {
+        error_log("Error issuing refund1 " . var_export($e, true));
+    }
+
+    //close invalid comps
+    $stmt = $db->prepare(
+        "UPDATE Competitions 
+         SET paid_out = 1 
+         WHERE expires <= CURRENT_TIMESTAMP() AND current_participants < min_participants AND paid_out = 0"
+    );
+
+    try {
+        $stmt->execute();
+        $rows = $stmt->rowCount();
+        elog("Closed $rows invalid competitions");
+    } catch (PDOException $e) {
+        error_log("Closing invalid comps error: " . var_export($e, true));
+    }
+    elog("Done calc winners");
+}
+
+function issue_refund($user_id,$comp_id) {
+    $db = getDB();
+    $stmt = $db->prepare(
+       "SELECT  starting_reward,join_fee
+        FROM    Competitions
+        WHERE   id = :cid
+    ");
+
+    try {
+        $stmt->bindValue(":cid", $comp_id, PDO::PARAM_INT);
+        $r = $stmt->execute();
+        $sr = se($r, "starting_reward",0,false);
+        $jf = se($r, "join_fee",0,false);
+        insert_points($user_id,$sr+$jf+1,"Competition Invalidated");
+    } catch (PDOException $e)   {
+        error_log("Error issuing refund " . var_export($e, true));
+    }
+}
