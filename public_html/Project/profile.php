@@ -89,13 +89,9 @@ $user_id = get_user_id();
 ?>
 <h1>Profile</h1>
 <div>
+    Total Points: <?php echo get_total_points($user_id)?>
     Best Score: <?php echo get_best_score($user_id); ?>
 </div>
-<style>
-    table,td,thead,tr{
-        border:1px solid #000000;
-    }
-</style>
 <div>
     <?php $scores = get_latest_scores($user_id); ?>
     <h3>Score History</h3>
