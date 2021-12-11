@@ -14,8 +14,8 @@ $per_page = 5;
 paginate("SELECT count(1) as total FROM Competitions WHERE expires > current_timestamp() AND paid_out< 1");
 //handle page load
 //TODO fix join
-$query = "SELECT Competitions.id, name, min_participants, current_participants, current_reward, expires, min_score, join_fee, IF(competition_id is null, 0, 1) as joined,  CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
-LEFT JOIN (SELECT * FROM UserComps WHERE user_id = :uid) as uc ON uc.competition_id = Competitions.id WHERE expires > current_timestamp() AND paid_out < 1 ORDER BY expires ASC LIMIT :limit";
+$query = "SELECT Competitions.id, name, min_participants, current_participants, current_reward, expires, min_score, join_fee, IF(comp_id is null, 0, 1) as joined,  CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
+LEFT JOIN (SELECT * FROM CompetitionParticipants WHERE user_id = :uid) as uc ON uc.comp_id = Competitions.id WHERE expires > current_timestamp() AND paid_out < 1 ORDER BY expires ASC LIMIT :limit";
 /*$stmt = $db->prepare("SELECT BGD_Competitions.id, title, min_participants, current_participants, current_reward, expires, creator_id, min_score, join_cost, IF(competition_id is null, 0, 1) as joined,  CONCAT(first_place,'% - ', second_place, '% - ', third_place, '%') as place FROM BGD_Competitions
 JOIN BGD_Payout_Options on BGD_Payout_Options.id = BGD_Competitions.payout_option
 LEFT JOIN BGD_UserComps on BGD_UserComps.competition_id = BGD_Competitions.id WHERE user_id = :uid AND expires > current_timestamp() AND did_payout < 1 AND did_calc < 1 ORDER BY expires desc");*/
@@ -38,6 +38,7 @@ try {
 ?>
 <div class="container-fluid">
     <h1>List Competitions</h1>
+    <h2>Your Points: <?php echo get_total_points(get_user_id())?></h2>
     <table class="table text-light">
         <thead>
             <th>Title</th>
@@ -66,7 +67,7 @@ try {
                                     <input type="submit" name="join" class="btn btn-primary" value="Join (Cost: <?php se($row, "join_fee", 0) ?>)" />
                                 </form>
                             <?php endif; ?>
-                            <a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a>
+                            <!-- <a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a> -->
                         </td>
                     </tr>
                 <?php endforeach; ?>
