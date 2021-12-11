@@ -14,7 +14,7 @@ if (isset($_POST["name"]) && !empty($_POST["name"])) {
 
     if ($balance >= $cost) {
         $db->beginTransaction();
-        if (insert_points($user_id,$cost*-1,"Create Competition"))   {
+        if (insert_points($user_id,$cost*-1,"Create Competition $name"))   {
             $comp_id = save_data("Competitions", $_POST);
             if ($comp_id > 0) {
                 if (add_to_competition($comp_id, get_user_id())) {

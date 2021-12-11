@@ -286,6 +286,43 @@ function update_participants($comp_id)
     return false;
 }
 
+function join_competition($comp_id, $user_id, $cost)
+{
+    $balance = get_total_points(get_user_id());
+    if ($comp_id > 0) {
+        if ($balance >= $cost) {
+            $db = getDB();
+            $stmt = $db->prepare("SELECT title, join_cost from BGD_Competitions where id = :id");
+            try {
+                $stmt->execute([":id" => $comp_id]);
+                $r = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($r) {
+                    $cost = (int)se($r, "join_cost", 0, false);
+                    $name = se($r, "title", "", false);
+                    if ($balance >= $cost) {
+                        if(insert_points(get_user_id(),$cost * -1,"Joining Competition $name")) {
+                            if (add_to_competition($comp_id, $user_id)) {
+                                flash("Successfully joined $name", "success");
+                            }
+                        } else {
+                            flash("Failed to pay for competition", "danger");
+                        }
+                    } else {
+                        flash("You can't afford to join this competition", "warning");
+                    }
+                }
+            } catch (PDOException $e) {
+                error_log("Comp lookup error " . var_export($e, true));
+                flash("There was an error looking up the competition", "danger");
+            }
+        } else {
+            flash("You can't afford to join this competition", "warning");
+        }
+    } else {
+        flash("Invalid competition, please try again", "danger");
+    }
+}
+
 function add_to_competition($comp_id, $user_id)
 {
     $db = getDB();
@@ -329,4 +366,42 @@ function save_data($table, $data, $ignore = ["submit"])
         flash("<pre>" . var_export($e->errorInfo, true) . "</pre>");
         return -1;
     }
+}
+
+/**
+ * @param $query must have a column called "total"
+ * @param array $params
+ * @param int $per_page
+ */
+function paginate($query, $params = [], $per_page = 10)
+{
+    global $page; //will be available after function is called
+    try {
+        $page = (int)se($_GET, "page", 1, false);
+    } catch (Exception $e) {
+        //safety for if page is received as not a number
+        $page = 1;
+    }
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute($params);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("paginate error: " . var_export($e, true));
+    }
+    $total = 0;
+    if (isset($result)) {
+        $total = (int)se($result, "total", 0, false);
+    }
+    global $total_pages; //will be available after function is called
+    $total_pages = ceil($total / $per_page);
+    global $offset; //will be available after function is called
+    $offset = ($page - 1) * $per_page;
+}
+//updates or inserts page into query string while persisting anything already present
+function persistQueryString($page)
+{
+    $_GET["page"] = $page;
+    return http_build_query($_GET);
 }
