@@ -276,7 +276,7 @@ function update_participants($comp_id)
 {
     $db = getDB();
     $stmt = $db->prepare("UPDATE Competitions set current_participants = (SELECT IFNULL(COUNT(1),0) FROM CompetitionParticipants WHERE comp_id = :cid), 
-    current_reward = IF(join_fee > 0, current_reward + CEILING(join_fee * 0.5), current_reward) WHERE id = :cid");
+    current_reward = IF(join_fee > 0, current_reward + CEILING(join_fee * 0.5), current_reward+1) WHERE id = :cid");
     try {
         $stmt->execute([":cid" => $comp_id]);
         return true;
@@ -288,21 +288,22 @@ function update_participants($comp_id)
 
 function join_competition($comp_id, $user_id, $cost)
 {
-    $balance = get_total_points(get_user_id());
+    $balance = get_total_points($user_id);
     if ($comp_id > 0) {
         if ($balance >= $cost) {
             $db = getDB();
-            $stmt = $db->prepare("SELECT title, join_cost from BGD_Competitions where id = :id");
+            $stmt = $db->prepare("SELECT name, join_fee from Competitions where id = :id");
             try {
                 $stmt->execute([":id" => $comp_id]);
                 $r = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($r) {
-                    $cost = (int)se($r, "join_cost", 0, false);
-                    $name = se($r, "title", "", false);
+                    $cost = (int)se($r, "join_fee", 0, false);
+                    $name = se($r, "name", "", false);
                     if ($balance >= $cost) {
-                        if(insert_points(get_user_id(),$cost * -1,"Joining Competition $name")) {
+                        if(insert_points($user_id,$cost * -1,"Joining Competition $name")) {
                             if (add_to_competition($comp_id, $user_id)) {
                                 flash("Successfully joined $name", "success");
+                                return true;
                             }
                         } else {
                             flash("Failed to pay for competition", "danger");
@@ -321,6 +322,7 @@ function join_competition($comp_id, $user_id, $cost)
     } else {
         flash("Invalid competition, please try again", "danger");
     }
+    return false;
 }
 
 function add_to_competition($comp_id, $user_id)
