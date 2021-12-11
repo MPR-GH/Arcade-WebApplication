@@ -319,13 +319,10 @@ function save_data($table, $data, $ignore = ["submit"])
         $params[":$col"] = $data[$col];
     }
     $stmt = $db->prepare($query);
-    var_export($stmt);
-    echo "<br>";
-    var_export($params);
     try {
         $stmt->execute($params);
         //https://www.php.net/manual/en/pdo.lastinsertid.php
-        echo "Successfully added new record with id " . $db->lastInsertId();
+        //echo "Successfully added new record with id " . $db->lastInsertId();
         return $db->lastInsertId();
     } catch (PDOException $e) {
         //echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
