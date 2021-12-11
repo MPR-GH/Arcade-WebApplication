@@ -230,8 +230,9 @@ function insert_points($user_id,$amount,$reason) {
         flash("Added $amount points to your account","success");
     }   catch (PDOException $e) {
         error_log("Error inserting into points table for user $user_id: " . var_export($e->errorInfo, true));
+        return false;
     }
-    return 0;
+    return true;
 }
 
 function update_points($user_id)    {
@@ -269,4 +270,66 @@ function get_latest_scores($user_id, $limit = 10)
         error_log("Error getting latest $limit scores for user $user_id: " . var_export($e->errorInfo, true));
     }
     return [];
+}
+
+function update_participants($comp_id)
+{
+    $db = getDB();
+    $stmt = $db->prepare("UPDATE Competitions set current_participants = (SELECT IFNULL(COUNT(1),0) FROM CompetitionParticipants WHERE comp_id = :cid), 
+    current_reward = IF(join_fee > 0, current_reward + CEILING(join_fee * 0.5), current_reward) WHERE id = :cid");
+    try {
+        $stmt->execute([":cid" => $comp_id]);
+        return true;
+    } catch (PDOException $e) {
+        error_log("Update competition participant error: " . var_export($e, true));
+    }
+    return false;
+}
+
+function add_to_competition($comp_id, $user_id)
+{
+    $db = getDB();
+    $stmt = $db->prepare("INSERT INTO CompetitionParticipants (user_id, comp_id) VALUES (:uid, :cid)");
+    try {
+        $stmt->execute([":uid" => $user_id, ":cid" => $comp_id]);
+        update_participants($comp_id);
+        return true;
+    } catch (PDOException $e) {
+        error_log("Join Competition error: " . var_export($e, true));
+    }
+    return false;
+}
+
+function save_data($table, $data, $ignore = ["submit"])
+{
+    $table = se($table, null, null, false);
+    $db = getDB();
+    $query = "INSERT INTO $table "; //be sure you trust $table
+    //https://www.php.net/manual/en/functions.anonymous.php Example#3
+    $columns = array_filter(array_keys($data), function ($x) use ($ignore) {
+        return !in_array($x, $ignore); // $x !== "submit";
+    });
+    //arrow function uses fn and doesn't have return or { }
+    //https://www.php.net/manual/en/functions.arrow.php
+    $placeholders = array_map(fn ($x) => ":$x", $columns);
+    $query .= "(" . join(",", $columns) . ") VALUES (" . join(",", $placeholders) . ")";
+
+    $params = [];
+    foreach ($columns as $col) {
+        $params[":$col"] = $data[$col];
+    }
+    $stmt = $db->prepare($query);
+    var_export($stmt);
+    echo "<br>";
+    var_export($params);
+    try {
+        $stmt->execute($params);
+        //https://www.php.net/manual/en/pdo.lastinsertid.php
+        echo "Successfully added new record with id " . $db->lastInsertId();
+        return $db->lastInsertId();
+    } catch (PDOException $e) {
+        //echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        flash("<pre>" . var_export($e->errorInfo, true) . "</pre>");
+        return -1;
+    }
 }
