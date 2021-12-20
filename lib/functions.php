@@ -339,6 +339,41 @@ function add_to_competition($comp_id, $user_id)
     return false;
 }
 
+function update_data($table, $id,  $data, $ignore = ["id", "submit"])
+{
+    $columns = array_keys($data);
+    foreach ($columns as $index => $value) {
+        //Note: normally it's bad practice to remove array elements during iteration
+
+        //remove id, we'll use this for the WHERE not for the SET
+        //remove submit, it's likely not in your table
+        if (in_array($value, $ignore)) {
+            unset($columns[$index]);
+        }
+    }
+    $query = "UPDATE $table SET "; //be sure you trust $table
+    $cols = [];
+    foreach ($columns as $index => $col) {
+        array_push($cols, "$col = :$col");
+    }
+    $query .= join(",", $cols);
+    $query .= " WHERE id = :id";
+
+    $params = [":id" => $id];
+    foreach ($columns as $col) {
+        $params[":$col"] = se($data, $col, "", false);
+    }
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute($params);
+        return true;
+    } catch (PDOException $e) {
+        flash("<pre>" . var_export($e->errorInfo, true) . "</pre>");
+        return false;
+    }
+}
+
 function save_data($table, $data, $ignore = ["submit"])
 {
     $table = se($table, null, null, false);
@@ -600,4 +635,32 @@ function redirect($path)
     //metadata redirect (runs if javascript is disabled)
     echo "<noscript><meta http-equiv=\"refresh\" content=\"0;url=" . get_url($path) . "\"/></noscript>";
     die();
+}
+
+function get_visibility($user_id)   {
+    $db = getDB();
+    $query = "SELECT visibility FROM Users WHERE id=:uid";
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":uid" => $user_id]);
+        $r = $stmt->fetch(PDO::FETCH_ASSOC);
+        $visib = $r["visibility"];
+        ($visib==0) ? ($visib = "Private") : ($visib = "Public");
+        return $visib;
+    }   catch (PDOException $e) {
+        error_log("Error getting visibility " . var_export($e, true));
+    }
+}
+
+function update_visibility($user_id,$v) {
+    $db = getDB();
+    $query = "UPDATE Users SET visibility=:v WHERE id=:uid";
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":v" => $v,":uid" => $user_id]);
+        return true;
+    }   catch (PDOException $e) {
+        error_log("Error updating visibility " . var_export($e, true));
+    }
+    return false;
 }
