@@ -38,6 +38,9 @@ require_once(__DIR__ . "/../lib/functions.php");
             <li><a href="<?php echo get_url('create_competition.php'); ?>">Create Competition</a></li>
             <li><a href="<?php echo get_url('list_competitions.php'); ?>">Active Competitions</a></li>
         <?php endif; ?>
+        <?php if (has_role("Admin")) : ?>
+            <li><a href="<?php echo get_url('edit_competitions.php'); ?>">Edit Competitions</a></li>
+        <?php endif; ?>
         <li><a href="<?php echo get_url('game.php'); ?>">Play</a></li>
         <?php if (!is_logged_in()) : ?>
             <li><a href="<?php echo get_url('login.php'); ?>">Login</a></li>

@@ -79,11 +79,6 @@ try {
                             <?php endif; ?>
                             <a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a>
                         </td>
-                        <?php if (has_role("Admin")) : ?>
-                            <td>
-                                <a class="btn btn-secondary" href="edit_competitions.php?comp_id=<?php se($row, 'id'); ?>">Edit</a>
-                            </td>
-                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
