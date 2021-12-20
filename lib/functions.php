@@ -426,6 +426,7 @@ function paginate($query, $params = [], $per_page = 10)
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("paginate error: " . var_export($e, true));
+        var_dump($e);
     }
     $total = 0;
     if (isset($result)) {
