@@ -2,14 +2,6 @@
 require_once(__DIR__ . "/../../partials/nav.php");
 is_logged_in(true);
 $db = getDB();
-//handle join
-if (isset($_POST["join"])) {
-    $user_id = get_user_id();
-    $comp_id = se($_POST, "comp_id", 0, false);
-    $cost = se($_POST, "join_fee", 0, false);
-    $balance = get_total_points(get_user_id());
-    join_competition($comp_id, $user_id, $cost);
-}
 
 $per_page = 10;
 paginate("SELECT count(1) as total FROM Competitions WHERE paid_out < 1");
@@ -67,17 +59,6 @@ try {
                         <td><?php se($row, "current_reward"); ?><br>Payout: <?php se($row, "place", "-"); ?></td>
                         <td><?php se($row, "min_score"); ?></td>
                         <td><?php se($row, "expires", "-"); ?></td>
-                        <td>
-                            <?php if (se($row, "joined", 0, false)) : ?>
-                                <button class="btn btn-primary disabled" onclick="event.preventDefault()" disabled>Already Joined</button>
-                            <?php else : ?>
-                                <form method="POST">
-                                    <input type="hidden" name="comp_id" value="<?php se($row, 'id'); ?>" />
-                                    <input type="hidden" name="cost" value="<?php se($row, 'join_fee', 0); ?>" />
-                                    <input type="submit" name="join" class="btn btn-primary" value="Join (Cost: <?php se($row, "join_fee", 0) ?>)" />
-                                </form>
-                            <?php endif; ?>
-                        </td>
                         <td><a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a></td>
                         <td><a class="btn btn-secondary" href="edit_competitions.php?comp_id=<?php se($row, 'id'); ?>">Edit</a></td>
                     </tr>

@@ -1,22 +1,10 @@
 <?php
 require_once(__DIR__ . "/../../partials/nav.php");
 is_logged_in(true);
-
-$db = getDB();
 $user_id = get_user_id();
 
-$query =    "SELECT name, starting_reward, current_reward, min_score, min_participants, join_fee, duration, first_place_per, second_place_per, third_place_per
-            FROM Competitions
-            WHERE id = :cid";
-$stmt = $db->prepare($query);
 $comp_id = se($_GET, "comp_id", 0, false);
-$stmt->bindValue(":cid", $comp_id, PDO::PARAM_INT);
-try {
-    $stmt->execute();
-    $r = $stmt->fetch();
-}   catch (PDOException $e) {
-    flash("<pre>" . var_export($e, true) . "</pre>");
-}
+$r = get_competition_info($comp_id);
 ?>
 
 <div class="container-fluid">
