@@ -139,9 +139,41 @@ try {
         <a class="btn btn-primary" href="?edit=true">Edit</a>
     <?php endif; ?>
 <?php endif; ?>
-<div>
-    
-</div>
+<?php
+$per_page = 10;
+paginate("SELECT count(1) as total FROM Scores WHERE user_id=:uid",[":uid"=>$user_id]);
+
+
+//handle page load
+$query =    "SELECT score, created
+            FROM Scores
+            WHERE user_id=:uid
+            ORDER BY created ASC
+            LIMIT :offset, :count";
+
+$stmt = $db->prepare($query);
+$params = [];
+$results = [];
+$params[":offset"] = $offset;
+$params[":count"] = $per_page;
+$params[":uid"] = get_user_id();
+
+foreach ($params as $key => $value) {
+    $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+    $stmt->bindValue($key, $value, $type);
+}
+$params = null; //set it to null to avoid issues
+
+try {
+    $stmt->execute($params); //dynamically populated params to bind
+    $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($r) {
+        $results = $r;
+    }
+} catch (PDOException $e) {
+    flash("<pre>" . var_export($e, true) . "</pre>");
+}
+?>
 <div>
     <?php $scores = get_latest_scores($user_id); ?>
     <h3>Score History</h3>
@@ -151,14 +183,21 @@ try {
             <th>Time</th>
         </thead>
         <tbody>
-            <?php foreach ($scores as $score) : ?>
+            <?php if (count($results) > 0) : ?>
+                <?php foreach ($results as $row) : ?>
+                    <tr>
+                        <td><?php se($row, "score"); ?></td>
+                        <td><?php se($row, "created"); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
                 <tr>
-                    <td><?php se($score, "score", 0); ?></td>
-                    <td><?php se($score, "created", "-"); ?></td>
+                    <td colspan="100%">No Score History</td>
                 </tr>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
+    <?php include(__DIR__ . "/../../partials/pagination.php"); ?>
 </div>
 <?php if (!$edit) : ?>
     <div>Username: <?php se($username); ?></div>
@@ -222,9 +261,7 @@ try {
                         <td><?php se($row, "current_reward"); ?><br>Payout: <?php se($row, "place", "-"); ?></td>
                         <td><?php se($row, "min_score"); ?></td>
                         <td><?php se($row, "expires", "-"); ?></td>
-                        <td>
-                            <a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a>
-                        </td>
+                        <td><a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
