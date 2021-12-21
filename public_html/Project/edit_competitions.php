@@ -5,7 +5,7 @@ is_logged_in(true);
 $db = getDB();
 $user_id = get_user_id();
 
-$query =    "SELECT name, starting_reward, min_score, min_participants, join_fee, duration, first_place_per, second_place_per, third_place_per
+$query =    "SELECT name, starting_reward, current_reward, min_score, min_participants, join_fee, duration, first_place_per, second_place_per, third_place_per
             FROM Competitions
             WHERE id = :cid";
 $stmt = $db->prepare($query);
@@ -13,67 +13,60 @@ $comp_id = se($_GET, "comp_id", 0, false);
 $stmt->bindValue(":cid", $comp_id, PDO::PARAM_INT);
 try {
     $stmt->execute();
-    $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $r = $stmt->fetch();
 }   catch (PDOException $e) {
     flash("<pre>" . var_export($e, true) . "</pre>");
 }
-var_dump($r);
 ?>
 
 <div class="container-fluid">
-    <h1>Edit Competition : <?php echo se($r,"name","",false);?></h1>
-    <h2>Your Points: <?php echo get_total_points($user_id)?></h2>
+    <h1>Edit Competition : <?php se($r,"name","",true);?></h1>
     <form method="POST" onsubmit="return validate(this);">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input id="name" name="name" class="form-control" />
+            <input id="name" name="name" class="form-control" disabled value=<?php se($r,"name","",true);?> />
         </div>
         <div class="mb-3">
             <label for="reward" class="form-label">Starting Reward</label>
-            <input id="reward" type="number" name="starting_reward" class="form-control" onchange="updateCost()" placeholder=">= 1" min="1" />
+            <input id="reward" type="number" name="starting_reward" class="form-control" onchange="updateCost()" placeholder=">= 1" min="1" disabled value=<?php se($r,"starting_reward","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="ms" class="form-label">Min. Score</label>
-            <input id="ms" name="min_score" type="number" class="form-control" placeholder=">= 0" min="0" />
+            <label for="reward" class="form-label">Current Reward [This will change the winning reward for this competition] </label>
+            <input id="reward" type="number" name="starting_reward" class="form-control" onchange="updateCost()" placeholder=">= 1" min="1" value=<?php se($r,"current_reward","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="mp" class="form-label">Min. Participants</label>
-            <input id="mp" name="min_participants" type="number" class="form-control" placeholder=">= 3" min="3" />
+            <label for="ms" class="form-label">Min. Score [This will change the base minimum score to qualify for this competition]</label>
+            <input id="ms" name="min_score" type="number" class="form-control" placeholder=">= 0" min="0" value=<?php se($r,"min_score","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="jc" class="form-label">Join Fee</label>
-            <input id="jc" name="join_fee" type="number" class="form-control" onchange="updateCost()" placeholder=">= 0" min="0" />
+            <label for="mp" class="form-label">Min. Participants [This will change the base mimumun participants for this competition]</label>
+            <input id="mp" name="min_participants" type="number" class="form-control" placeholder=">= 3" min="3" value=<?php se($r,"min_participants","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="duration" class="form-label">Duration (in Days)</label>
-            <input id="duration" name="duration" type="number" class="form-control" placeholder=">= 3" min="3" />
+            <label for="jc" class="form-label">Join Fee [This will change the base Join Fee for this competition]</label>
+            <input id="jc" name="join_fee" type="number" class="form-control" onchange="updateCost()" placeholder=">= 0" min="0" value=<?php se($r,"join_fee","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="po1" class="form-label">Payout First Place</label>
-            <input id="po1" name="first_place_per" type="number" class="form-control" placeholder="70" max="100" min="0">
+            <label for="duration" class="form-label">Duration (in Days) [This will add the specified number of days from the current day to this competition]</label>
+            <input id="duration" name="duration" type="number" class="form-control" placeholder=">= 3" min="3" value=<?php se($r,"duration","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="po2" class="form-label">Payout Second Place</label>
-            <input id="po2" name="second_place_per" type="number" class="form-control" placeholder="20" max="100" min="0">
+            <label for="po1" class="form-label">Payout First Place [This will change the payout for this competition]</label>
+            <input id="po1" name="first_place_per" type="number" class="form-control" placeholder="70" max="100" min="0" value=<?php se($r,"first_place_per","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="po3" class="form-label">Payout Third Place</label>
-            <input id="po3" name="third_place_per" type="number" class="form-control" placeholder="10" max="100" min="0">
+            <label for="po2" class="form-label">Payout Second Place [This will change the payout for this competition]</label>
+            <input id="po2" name="second_place_per" type="number" class="form-control" placeholder="20" max="100" min="0" value=<?php se($r,"second_place_per","",true);?> />
         </div>
         <div class="mb-3">
-            <input type="submit" value="Create Competition (Cost: 2)" class="btn btn-primary" />
+            <label for="po3" class="form-label">Payout Third Place [This will change the payout for this competition]</label>
+            <input id="po3" name="third_place_per" type="number" class="form-control" placeholder="10" max="100" min="0" value=<?php se($r,"third_place_per","",true);?> />
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Update" class="btn btn-primary" />
         </div>
     </form>
     <script>
-        function updateCost() {
-            let starting = parseInt(document.getElementById("reward").value || 0) + 1;
-            let join = parseInt(document.getElementById("jc").value || 0);
-            if (join < 0) {
-                join = 1;
-            }
-            let cost = starting + join;
-            document.querySelector("[type=submit]").value = `Create Competition (Cost: ${cost})`;
-        }
         function validate(form) {
             let po1 = parseInt(document.getElementById("po1").value);
             let po2 = parseInt(document.getElementById("po2").value);
