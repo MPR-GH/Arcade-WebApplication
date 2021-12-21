@@ -4,7 +4,10 @@
 if (!isset($duration)) {
     $duration = "day"; //choosing to default to day
 }
-$results = get_top_10($duration);
+if (!isset($compTableParse))    {
+    $compTableParse = false;
+}
+$results = $compTableParse ? get_top_scores_for_comp($comp_id) : get_top_10($duration);
 
 switch ($duration) {
     case "day":
