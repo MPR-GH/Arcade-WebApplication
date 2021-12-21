@@ -456,9 +456,10 @@ function get_top_scores_for_comp($comp_id, $limit = 10)
     BETWEEN uc.created AND c.expires ORDER BY s.score desc LIMIT :limit"
     );*/
     //Below if a user can't win more than one place
-    $stmt = $db->prepare("SELECT * FROM (DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
+    $stmt = $db->prepare("SELECT * FROM (SELECT u.username, s.user_id, s.score,s.created, DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
     JOIN CompetitionParticipants uc on uc.user_id = s.user_id
     JOIN Competitions c on uc.comp_id = c.id
+    JOIN Users u on uc.user_id = u.id
     WHERE c.id = :cid AND s.created BETWEEN uc.created AND c.expires
     )as t where `rank` = 1 ORDER BY score desc LIMIT :limit");
     $scores = [];
