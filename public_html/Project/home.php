@@ -2,6 +2,7 @@
 require(__DIR__ . "/../../partials/nav.php");
 ?>
 <h1>Home</h1>
+<h2><a href="<?php echo get_url('game.php'); ?>">Try out our main game</a></h2>
 <?php
 
 if (is_logged_in(true)) {
