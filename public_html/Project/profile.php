@@ -9,6 +9,7 @@ require_once(__DIR__ . "/../../partials/nav.php");
  * otherwise redirect away
  */
 $user_id = se($_GET, "id", get_user_id(), false);
+var_dump($user_id);
 error_log("user id $user_id");
 $isMe = $user_id === get_user_id();
 //!! makes the value into a true or false value regardless of the data https://stackoverflow.com/a/2127324
@@ -109,7 +110,6 @@ if (isset($_POST["save"]) && $isMe && $edit) {
 
 <?php
 $email = get_user_email();
-$username = get_username();
 $created = "";
 $public = false;
 //TODO pull any other public info you want
@@ -156,7 +156,7 @@ $params = [];
 $results = [];
 $params[":offset"] = $offset;
 $params[":count"] = $per_page;
-$params[":uid"] = get_user_id();
+$params[":uid"] = $user_id;
 
 foreach ($params as $key => $value) {
     $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
@@ -197,7 +197,6 @@ try {
             <?php endif; ?>
         </tbody>
     </table>
-    <?php include(__DIR__ . "/../../partials/pagination.php"); ?>
 </div>
 <?php if (!$edit) : ?>
     <div>Username: <?php se($username); ?></div>
@@ -241,8 +240,7 @@ try {
     }
 ?>
 <div class="container-fluid">
-    <h1>Competition History</h1>
-    <h2>Your Points: <?php echo get_total_points(get_user_id())?></h2>
+    <h3>Competition History</h3>
     <table class="table text-light">
         <thead>
             <th>Title</th>
