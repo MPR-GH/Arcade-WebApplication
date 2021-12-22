@@ -103,9 +103,6 @@ if(!is_logged_in()) {
                 context.fillText('Click to Start', canvas.width / 2, canvas.height / 2);
                 context.font = '18px Arial';
                 context.fillText('Up/Down OR W/S OR D/A to move, Space OR click to shoot.', canvas.width / 2, (canvas.height / 4) * 3);
-                context.font = '12px Arial';
-                context.fillStyle = 'red';
-                context.fillText('Login to save score!', canvas.width / 2, (canvas.height / 4) * 3.5);
                 // Start the game on a click
                 canvas.addEventListener('click', startGame);
             }
