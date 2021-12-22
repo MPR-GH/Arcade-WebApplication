@@ -1,5 +1,8 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
+if(!is_logged_in()) {
+    flash("Please login to save score.","info");
+}
 ?>
 <html>
     <head>
@@ -342,3 +345,6 @@ require(__DIR__ . "/../../partials/nav.php");
         </style>
     </head>
 </html>
+<?php
+require_once(__DIR__ . "/../../partials/flash.php");
+?>
