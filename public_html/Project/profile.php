@@ -9,7 +9,6 @@ require_once(__DIR__ . "/../../partials/nav.php");
  * otherwise redirect away
  */
 $user_id = se($_GET, "id", get_user_id(), false);
-var_dump($user_id);
 error_log("user id $user_id");
 $isMe = $user_id === get_user_id();
 //!! makes the value into a true or false value regardless of the data https://stackoverflow.com/a/2127324
