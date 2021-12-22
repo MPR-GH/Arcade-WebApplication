@@ -41,7 +41,7 @@ function is_logged_in($redirect = false, $destination = "login.php")
     $isLoggedIn = isset($_SESSION["user"]);
     if ($redirect && !$isLoggedIn) {
         flash("You must be logged in to view this page", "warning");
-        die(header("Location: $destination"));
+        redirect($destination);
     }
     return $isLoggedIn; //se($_SESSION, "user", false, false);
 }
@@ -339,6 +339,41 @@ function add_to_competition($comp_id, $user_id)
     return false;
 }
 
+function update_data($table, $id,  $data, $ignore = ["id", "submit"])
+{
+    $columns = array_keys($data);
+    foreach ($columns as $index => $value) {
+        //Note: normally it's bad practice to remove array elements during iteration
+
+        //remove id, we'll use this for the WHERE not for the SET
+        //remove submit, it's likely not in your table
+        if (in_array($value, $ignore)) {
+            unset($columns[$index]);
+        }
+    }
+    $query = "UPDATE $table SET "; //be sure you trust $table
+    $cols = [];
+    foreach ($columns as $index => $col) {
+        array_push($cols, "$col = :$col");
+    }
+    $query .= join(",", $cols);
+    $query .= " WHERE id = :id";
+
+    $params = [":id" => $id];
+    foreach ($columns as $col) {
+        $params[":$col"] = se($data, $col, "", false);
+    }
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute($params);
+        return true;
+    } catch (PDOException $e) {
+        flash("<pre>" . var_export($e->errorInfo, true) . "</pre>");
+        return false;
+    }
+}
+
 function save_data($table, $data, $ignore = ["submit"])
 {
     $table = se($table, null, null, false);
@@ -391,6 +426,7 @@ function paginate($query, $params = [], $per_page = 10)
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("paginate error: " . var_export($e, true));
+        var_dump($e);
     }
     $total = 0;
     if (isset($result)) {
@@ -420,9 +456,10 @@ function get_top_scores_for_comp($comp_id, $limit = 10)
     BETWEEN uc.created AND c.expires ORDER BY s.score desc LIMIT :limit"
     );*/
     //Below if a user can't win more than one place
-    $stmt = $db->prepare("SELECT * FROM (DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
+    $stmt = $db->prepare("SELECT * FROM (SELECT u.username, s.user_id, s.score,s.created, DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
     JOIN CompetitionParticipants uc on uc.user_id = s.user_id
     JOIN Competitions c on uc.comp_id = c.id
+    JOIN Users u on uc.user_id = u.id
     WHERE c.id = :cid AND s.created BETWEEN uc.created AND c.expires
     )as t where `rank` = 1 ORDER BY score desc LIMIT :limit");
     $scores = [];
@@ -600,4 +637,64 @@ function redirect($path)
     //metadata redirect (runs if javascript is disabled)
     echo "<noscript><meta http-equiv=\"refresh\" content=\"0;url=" . get_url($path) . "\"/></noscript>";
     die();
+}
+
+function get_visibility($user_id)   {
+    $db = getDB();
+    $query = "SELECT visibility FROM Users WHERE id=:uid";
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":uid" => $user_id]);
+        $r = $stmt->fetch(PDO::FETCH_ASSOC);
+        $visib = $r["visibility"];
+        ($visib==0) ? ($visib = "Private") : ($visib = "Public");
+        return $visib;
+    }   catch (PDOException $e) {
+        error_log("Error getting visibility " . var_export($e, true));
+    }
+}
+
+function update_visibility($user_id,$v) {
+    $db = getDB();
+    $query = "UPDATE Users SET visibility=:v WHERE id=:uid";
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":v" => $v,":uid" => $user_id]);
+        return true;
+    }   catch (PDOException $e) {
+        error_log("Error updating visibility " . var_export($e, true));
+    }
+    return false;
+}
+
+function get_competition_info($comp_id) {
+    $db = getDB();
+    $query =    "SELECT name, starting_reward, current_reward, created, min_score, min_participants, join_fee, duration, first_place_per, second_place_per, third_place_per
+                FROM Competitions
+                WHERE id = :cid";
+    $stmt = $db->prepare($query);
+    
+    $stmt->bindValue(":cid", $comp_id, PDO::PARAM_INT);
+    try {
+        $stmt->execute();
+        $r = $stmt->fetch();
+        return $r;
+    }   catch (PDOException $e) {
+        flash("<pre>" . var_export($e, true) . "</pre>");
+    }
+}
+
+function date_increment($createdTS,$durationD)   {
+    $db = getDB();
+    $query = "SELECT DATE_ADD(:c, INTERVAL :d DAY) AS time";
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(":c", $createdTS);
+    $stmt->bindValue(":d", $durationD);
+    try {
+        $stmt->execute();
+        $r = $stmt->fetch();
+        return se($r,"time","",false);
+    }   catch (PDOException $e) {
+        flash("<pre>" . var_export($e, true) . "</pre>");
+    }
 }

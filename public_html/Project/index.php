@@ -1,3 +1,2 @@
 <?php
-
-die(header("Location: /Project/login.php"));
+redirect("/Project/login.php");
