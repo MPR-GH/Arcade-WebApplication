@@ -30,6 +30,7 @@ if (isset($data["score"])) {
         $score = (int)se($data, "score", 0, false);
         error_log("Rejected " . ($reject ? "true" : "false"));
         save_score($score, $user_id, true);
+        insert_points($user_id,$score,"Game");
         http_response_code(200);
     }
 }
