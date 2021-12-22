@@ -669,7 +669,7 @@ function update_visibility($user_id,$v) {
 
 function get_competition_info($comp_id) {
     $db = getDB();
-    $query =    "SELECT name, starting_reward, current_reward, min_score, min_participants, join_fee, duration, first_place_per, second_place_per, third_place_per
+    $query =    "SELECT name, starting_reward, current_reward, created, min_score, min_participants, join_fee, duration, first_place_per, second_place_per, third_place_per
                 FROM Competitions
                 WHERE id = :cid";
     $stmt = $db->prepare($query);
@@ -679,6 +679,21 @@ function get_competition_info($comp_id) {
         $stmt->execute();
         $r = $stmt->fetch();
         return $r;
+    }   catch (PDOException $e) {
+        flash("<pre>" . var_export($e, true) . "</pre>");
+    }
+}
+
+function date_increment($createdTS,$durationD)   {
+    $db = getDB();
+    $query = "SELECT DATE_ADD(:c, INTERVAL :d DAY) AS time";
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(":c", $createdTS);
+    $stmt->bindValue(":d", $durationD);
+    try {
+        $stmt->execute();
+        $r = $stmt->fetch();
+        return se($r,"time","",false);
     }   catch (PDOException $e) {
         flash("<pre>" . var_export($e, true) . "</pre>");
     }

@@ -5,6 +5,22 @@ $user_id = get_user_id();
 
 $comp_id = se($_GET, "comp_id", 0, false);
 $r = get_competition_info($comp_id);
+
+
+if (isset($_POST) && !empty($_POST)) {
+    $duration = se($_POST,"duration",0,false);
+    $expire = date_increment(se($r,"created","",false),$duration);
+    $_POST["expires"]=$expire;
+    $db->beginTransaction();
+    if (update_data("Competitions", $comp_id, $_POST)) {
+        flash("Successfully updated competition", "success");
+        $db->commit();
+    } else {
+        flash("error", "danger");
+        $db->rollback();
+    }
+}
+
 ?>
 
 <div class="container-fluid">
@@ -16,11 +32,11 @@ $r = get_competition_info($comp_id);
         </div>
         <div class="mb-3">
             <label for="reward" class="form-label">Starting Reward</label>
-            <input id="reward" type="number" name="starting_reward" class="form-control" onchange="updateCost()" placeholder=">= 1" min="1" disabled value=<?php se($r,"starting_reward","",true);?> />
+            <input id="reward" type="number" name="starting_reward" class="form-control" placeholder=">= 1" min="1" disabled value=<?php se($r,"starting_reward","",true);?> />
         </div>
         <div class="mb-3">
             <label for="reward" class="form-label">Current Reward [This will change the winning reward for this competition] </label>
-            <input id="reward" type="number" name="starting_reward" class="form-control" onchange="updateCost()" placeholder=">= 1" min="1" value=<?php se($r,"current_reward","",true);?> />
+            <input id="reward" type="number" name="current_reward" class="form-control" placeholder=">= 1" min="1" value=<?php se($r,"current_reward","",true);?> />
         </div>
         <div class="mb-3">
             <label for="ms" class="form-label">Min. Score [This will change the base minimum score to qualify for this competition]</label>
@@ -32,10 +48,10 @@ $r = get_competition_info($comp_id);
         </div>
         <div class="mb-3">
             <label for="jc" class="form-label">Join Fee [This will change the base Join Fee for this competition]</label>
-            <input id="jc" name="join_fee" type="number" class="form-control" onchange="updateCost()" placeholder=">= 0" min="0" value=<?php se($r,"join_fee","",true);?> />
+            <input id="jc" name="join_fee" type="number" class="form-control" placeholder=">= 0" min="0" value=<?php se($r,"join_fee","",true);?> />
         </div>
         <div class="mb-3">
-            <label for="duration" class="form-label">Duration (in Days) [This will add the specified number of days from the current day to this competition]</label>
+            <label for="duration" class="form-label">Duration (in Days) [This will change the duration of the competition from the competition's creation day <?php se($r,"created","",true);?>]</label>
             <input id="duration" name="duration" type="number" class="form-control" placeholder=">= 3" min="3" value=<?php se($r,"duration","",true);?> />
         </div>
         <div class="mb-3">
