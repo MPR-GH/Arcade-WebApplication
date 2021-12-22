@@ -173,31 +173,31 @@ try {
     flash("<pre>" . var_export($e, true) . "</pre>");
 }
 ?>
-<div>
-    <?php $scores = get_latest_scores($user_id); ?>
-    <h3>Score History</h3>
-    <table class="table text-light">
-        <thead>
-            <th>Score</th>
-            <th>Time</th>
-        </thead>
-        <tbody>
-            <?php if (count($results) > 0) : ?>
-                <?php foreach ($results as $row) : ?>
-                    <tr>
-                        <td><?php se($row, "score"); ?></td>
-                        <td><?php se($row, "created"); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <tr>
-                    <td colspan="100%">No Score History</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
 <?php if (!$edit) : ?>
+    <div>
+        <?php $scores = get_latest_scores($user_id); ?>
+        <h3>Score History</h3>
+        <table class="table text-light">
+            <thead>
+                <th>Score</th>
+                <th>Time</th>
+            </thead>
+            <tbody>
+                <?php if (count($results) > 0) : ?>
+                    <?php foreach ($results as $row) : ?>
+                        <tr>
+                            <td><?php se($row, "score"); ?></td>
+                            <td><?php se($row, "created"); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="100%">No Score History</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
     <div>Username: <?php se($username); ?></div>
     <div>Joined: <?php se($created); ?></div>
     <div>Total Points: <?php echo get_total_points($user_id)?></div>
