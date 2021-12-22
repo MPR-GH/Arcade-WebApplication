@@ -1,9 +1,26 @@
 <?php
 require_once(__DIR__ . "/../../partials/nav.php");
-is_logged_in(true);
+//is_logged_in(true);
+/**
+ * Logic:
+ * Check if query params have an id
+ * If so, use that id
+ * Else check logged in user id
+ * otherwise redirect away
+ */
+$user_id = se($_GET, "id", get_user_id(), false);
+error_log("user id $user_id");
+$isMe = $user_id === get_user_id();
+//!! makes the value into a true or false value regardless of the data https://stackoverflow.com/a/2127324
+$edit = !!se($_GET, "edit", false, false); //if key is present allow edit, otherwise no edit
+if ($user_id < 1) {
+    flash("Invalid user", "danger");
+    redirect("home.php");
+    //die(header("Location: home.php"));
+}
 ?>
 <?php
-if (isset($_POST["save"])) {
+if (isset($_POST["save"]) && $isMe && $edit) {
     $db = getDB();
     $email = se($_POST, "email", null, false);
     $username = se($_POST, "username", null, false);
@@ -79,19 +96,84 @@ if (isset($_POST["save"])) {
             flash("New passwords don't match", "warning");
         }
     }
+
+    $vb = se($_POST, "visib", null, false);
+    $tv = ($vb=="private") ? (0) : (1);
+    $visib = get_visibility($user_id);
+    $vis = ($visib=="Private") ? (0) : (1);
+    if($tv != $vis)   {
+        update_visibility($user_id,$tv);
+    }
 }
 ?>
 
 <?php
 $email = get_user_email();
 $username = get_username();
-$user_id = get_user_id();
+$created = "";
+$public = false;
+//TODO pull any other public info you want
+$db = getDB();
+$stmt = $db->prepare("SELECT username, created, visibility from Users where id = :id");
+try {
+    $stmt->execute([":id" => $user_id]);
+    $r = $stmt->fetch(PDO::FETCH_ASSOC);
+    error_log("user: " . var_export($r, true));
+    $username = se($r, "username", "", false);
+    $created = se($r, "created", "", false);
+    $public = se($r, "visibility", 0, false) > 0;
+    if (!$public && !$isMe) {
+        flash("User's profile is private", "warning");
+        redirect("home.php");
+        //die(header("Location: home.php"));
+    }
+} catch (Exception $e) {
+    echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+}
 ?>
 <h1>Profile</h1>
-<div>
-    Total Points: <?php echo get_total_points($user_id)?>
-    Best Score: <?php echo get_best_score($user_id); ?>
-</div>
+<?php if ($isMe) : ?>
+    <?php if ($edit) : ?>
+        <a class="btn btn-primary" href="?">View</a>
+    <?php else : ?>
+        <a class="btn btn-primary" href="?edit=true">Edit</a>
+    <?php endif; ?>
+<?php endif; ?>
+<?php
+$per_page = 10;
+paginate("SELECT count(1) as total FROM Scores WHERE user_id=:uid",[":uid"=>$user_id]);
+
+
+//handle page load
+$query =    "SELECT score, created
+            FROM Scores
+            WHERE user_id=:uid
+            ORDER BY created ASC
+            LIMIT :offset, :count";
+
+$stmt = $db->prepare($query);
+$params = [];
+$results = [];
+$params[":offset"] = $offset;
+$params[":count"] = $per_page;
+$params[":uid"] = get_user_id();
+
+foreach ($params as $key => $value) {
+    $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+    $stmt->bindValue($key, $value, $type);
+}
+$params = null; //set it to null to avoid issues
+
+try {
+    $stmt->execute($params); //dynamically populated params to bind
+    $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($r) {
+        $results = $r;
+    }
+} catch (PDOException $e) {
+    flash("<pre>" . var_export($e, true) . "</pre>");
+}
+?>
 <div>
     <?php $scores = get_latest_scores($user_id); ?>
     <h3>Score History</h3>
@@ -101,40 +183,137 @@ $user_id = get_user_id();
             <th>Time</th>
         </thead>
         <tbody>
-            <?php foreach ($scores as $score) : ?>
+            <?php if (count($results) > 0) : ?>
+                <?php foreach ($results as $row) : ?>
+                    <tr>
+                        <td><?php se($row, "score"); ?></td>
+                        <td><?php se($row, "created"); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
                 <tr>
-                    <td><?php se($score, "score", 0); ?></td>
-                    <td><?php se($score, "created", "-"); ?></td>
+                    <td colspan="100%">No Score History</td>
                 </tr>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
+    <?php include(__DIR__ . "/../../partials/pagination.php"); ?>
 </div>
-<form method="POST" onsubmit="return validate(this);">
-    <div class="mb-3">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="<?php se($email); ?>" />
-    </div>
-    <div class="mb-3">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" value="<?php se($username); ?>" />
-    </div>
-    <!-- DO NOT PRELOAD PASSWORD -->
-    <div>Password Reset</div>
-    <div class="mb-3">
-        <label for="cp">Current Password</label>
-        <input type="password" name="currentPassword" id="cp" />
-    </div>
-    <div class="mb-3">
-        <label for="np">New Password</label>
-        <input type="password" name="newPassword" id="np" />
-    </div>
-    <div class="mb-3">
-        <label for="conp">Confirm Password</label>
-        <input type="password" name="confirmPassword" id="conp" />
-    </div>
-    <input type="submit" value="Update Profile" name="save" />
-</form>
+<?php if (!$edit) : ?>
+    <div>Username: <?php se($username); ?></div>
+    <div>Joined: <?php se($created); ?></div>
+    <div>Total Points: <?php echo get_total_points($user_id)?></div>
+    <div>Best Score: <?php echo get_best_score($user_id); ?></div>
+    <!-- TODO any other public info -->
+    <?php
+    $per_page = 10;
+    paginate("SELECT count(1) as total FROM CompetitionParticipants WHERE user_id = :uid",[":uid" => $user_id]);    
+    
+    //handle page load
+    //TODO fix join
+    $query = "SELECT Competitions.id, name, min_participants, current_participants, current_reward, expires, min_score, join_fee, IF(comp_id is null, 0, 1) as joined,  CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
+    RIGHT JOIN (SELECT * FROM CompetitionParticipants WHERE user_id = :uid) as uc ON uc.comp_id = Competitions.id ORDER BY expires ASC LIMIT :offset, :count";
+    /*$stmt = $db->prepare("SELECT BGD_Competitions.id, title, min_participants, current_participants, current_reward, expires, creator_id, min_score, join_cost, IF(competition_id is null, 0, 1) as joined,  CONCAT(first_place,'% - ', second_place, '% - ', third_place, '%') as place FROM BGD_Competitions
+    JOIN BGD_Payout_Options on BGD_Payout_Options.id = BGD_Competitions.payout_option
+    LEFT JOIN BGD_UserComps on BGD_UserComps.competition_id = BGD_Competitions.id WHERE user_id = :uid AND expires > current_timestamp() AND did_payout < 1 AND did_calc < 1 ORDER BY expires desc");*/
+    // $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $stmt = $db->prepare($query);
+    $params = [];
+    $results = [];
+    $params[":offset"] = $offset;
+    $params[":count"] = $per_page;
+    $params[":uid"] = $user_id;
+    
+    foreach ($params as $key => $value) {
+        $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+        $stmt->bindValue($key, $value, $type);
+    }
+    $params = null; //set it to null to avoid issues
+    
+    try {
+        $stmt->execute($params); //dynamically populated params to bind
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        flash("<pre>" . var_export($e, true) . "</pre>");
+    }
+?>
+<div class="container-fluid">
+    <h1>Competition History</h1>
+    <h2>Your Points: <?php echo get_total_points(get_user_id())?></h2>
+    <table class="table text-light">
+        <thead>
+            <th>Title</th>
+            <th>Participants</th>
+            <th>Reward</th>
+            <th>Min Score</th>
+            <th>Expires</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <?php if (count($results) > 0) : ?>
+                <?php foreach ($results as $row) : ?>
+                    <tr>
+                        <td><?php se($row, "name"); ?></td>
+                        <td><?php se($row, "current_participants"); ?>/<?php se($row, "min_participants"); ?></td>
+                        <td><?php se($row, "current_reward"); ?><br>Payout: <?php se($row, "place", "-"); ?></td>
+                        <td><?php se($row, "min_score"); ?></td>
+                        <td><?php se($row, "expires", "-"); ?></td>
+                        <td><a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td colspan="100%">No Competition History</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <?php include(__DIR__ . "/../../partials/pagination.php"); ?>
+</div>
+<?php endif; ?>
+
+<?php if ($isMe && $edit) : ?>
+    <form method="POST" onsubmit="return validate(this);">
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="<?php se($email); ?>" />
+        </div>
+        <div class="mb-3">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value="<?php se($username); ?>" />
+        </div>
+        <!-- DO NOT PRELOAD PASSWORD -->
+        <div>Password Reset</div>
+        <div class="mb-3">
+            <label for="cp">Current Password</label>
+            <input type="password" name="currentPassword" id="cp" />
+        </div>
+        <div class="mb-3">
+            <label for="np">New Password</label>
+            <input type="password" name="newPassword" id="np" />
+        </div>
+        <div class="mb-3">
+            <label for="conp">Confirm Password</label>
+            <input type="password" name="confirmPassword" id="conp" />
+        </div>
+        <div>Privacy</div>
+        <?php 
+            $visib = get_visibility($user_id);
+        ?>
+        <div class="mb-3">
+            <label for="vb">Currently set to: <?php echo $visib; ?></label>
+            <br>
+            <select id="vb" name="visib">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
+        </div>
+        <input type="submit" value="Update Profile" name="save" />
+    </form>
+<?php endif; ?>
 
 <script>
     function validate(form) {

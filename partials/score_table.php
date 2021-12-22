@@ -4,7 +4,10 @@
 if (!isset($duration)) {
     $duration = "day"; //choosing to default to day
 }
-$results = get_top_10($duration);
+if (!isset($compTableParse))    {
+    $compTableParse = false;
+}
+$results = $compTableParse ? get_top_scores_for_comp($comp_id) : get_top_10($duration);
 
 switch ($duration) {
     case "day":
@@ -48,7 +51,10 @@ switch ($duration) {
                             <tr>
                                 <td>
                                     <!--<a href="profile.php?id=<?php se($result, 'user_id'); ?>"><?php se($result, "username"); ?></a>-->
-                                    <?php se($result, "username"); ?>
+                                    <!--<?php se($result, "username"); ?>-->
+                                    <?php $user_id = se($result, "user_id", 0, false);
+                                    $username = se($result, "username", "", false);
+                                    include(__DIR__ . "/user_profile_link.php"); ?>
                                 </td>
                                 <td><?php se($result, "score"); ?></td>
                                 <td><?php se($result, "created"); ?></td>
